@@ -1,14 +1,12 @@
 package jazel.events;
 
-import lombok.AllArgsConstructor;
+import jazel.core.Log;
 
-@AllArgsConstructor
 public class EventDispatcher {
 
-    private Event event;
-
-    Boolean dispatch() {
-        event.setHandled(true);
-        return true;
-    }
+  public static boolean dispatch(Event event) {
+    Log.getCoreLogger().info("{}", event);
+    event.setHandled(true);
+    return true;
+  }
 }

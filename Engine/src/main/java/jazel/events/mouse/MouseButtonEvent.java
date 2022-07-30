@@ -6,12 +6,12 @@ import jazel.events.enumeration.EventType;
 import lombok.Getter;
 
 @Getter
-public class MouseButtonEvent extends Event {
+public abstract class MouseButtonEvent extends Event {
 
-    protected final int button;
+  protected final int button;
 
-    protected MouseButtonEvent(int button, EventType type) {
-        super(type, EventCategory.MOUSE);
-        this.button = button;
-    }
+  protected MouseButtonEvent(int button, EventType type) {
+    super(type, EventCategory.MOUSE);
+    this.button = button;
+  }
 }

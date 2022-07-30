@@ -6,7 +6,7 @@ import jazel.events.enumeration.EventType;
 
 public class AppTickEvent extends Event {
 
-    public AppTickEvent() {
-        super(EventType.APP_TICK, EventCategory.APPLICATION);
-    }
+  public AppTickEvent() {
+    super(EventType.APP_TICK, EventCategory.APPLICATION);
+  }
 }
