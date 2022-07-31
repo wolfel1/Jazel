@@ -2,6 +2,7 @@ package jazel.events;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import jazel.core.Application;
 
 public class EventRegistry {
 
@@ -9,7 +10,12 @@ public class EventRegistry {
   private static final EventDispatcher dispatcher = new EventDispatcher();
 
   public static void register(Event event) {
-    eventRegister.add(event);
+    var app = Application.getInstance();
+    app.onEvent(event);
+    if (!event.isHandled()) {
+
+      eventRegister.add(event);
+    }
   }
 
   public static void unregister(Event event) {

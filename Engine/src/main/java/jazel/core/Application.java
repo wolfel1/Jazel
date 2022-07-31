@@ -1,5 +1,7 @@
 package jazel.core;
 
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+
 import jazel.events.Event;
 import jazel.events.EventDispatcher;
 import jazel.events.EventRegistry;
@@ -8,13 +10,14 @@ import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
 import jazel.events.application.listener.WindowCloseEventListener;
 import jazel.events.application.listener.WindowResizeEventListener;
+import lombok.Getter;
 import org.lwjgl.glfw.GLFW;
 
 public class Application {
 
   private static Application instance;
 
-  private final Window window;
+  @Getter private final Window window;
   private final LayerStack layerStack;
 
   private boolean running;
@@ -58,7 +61,7 @@ public class Application {
 
   public void run() {
     while (running) {
-      float time = (float) GLFW.glfwGetTime();
+      float time = (float) glfwGetTime();
 
       if (!minimized) {
         for (Layer layer : layerStack.getLayers()) {
