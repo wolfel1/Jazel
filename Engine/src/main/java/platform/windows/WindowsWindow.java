@@ -7,6 +7,7 @@ import jazel.core.Log;
 import jazel.core.Window;
 import jazel.core.WindowProps;
 import jazel.events.EventDispatcher;
+import jazel.events.EventRegistry;
 import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
 import jazel.events.key.KeyPressedEvent;
@@ -77,13 +78,13 @@ public class WindowsWindow implements Window {
 
       var event = new WindowResizeEvent(width, height);
 
-      EventDispatcher.dispatch(event);
+      EventRegistry.register(event);
     });
 
     GLFW.glfwSetWindowCloseCallback(window, (long window) -> {
       var event = new WindowCloseEvent();
 
-      EventDispatcher.dispatch(event);
+      EventRegistry.register(event);
     });
 
     GLFW.glfwSetKeyCallback(window, (long window, int key, int scanCode, int action, int mods) -> {
@@ -91,17 +92,17 @@ public class WindowsWindow implements Window {
         case GLFW.GLFW_PRESS -> {
           var event = new KeyPressedEvent(key, 0);
 
-          EventDispatcher.dispatch(event);
+          EventRegistry.register(event);
         }
         case GLFW.GLFW_RELEASE -> {
           var event = new KeyReleasedEvent(key);
 
-          EventDispatcher.dispatch(event);
+          EventRegistry.register(event);
         }
         case GLFW.GLFW_REPEAT -> {
           var event = new KeyPressedEvent(key,1);
 
-          EventDispatcher.dispatch(event);
+          EventRegistry.register(event);
         }
       }
     });
@@ -109,7 +110,7 @@ public class WindowsWindow implements Window {
     GLFW.glfwSetCharCallback(window, (long window, int keycode) -> {
       var event = new KeyTypedEvent(keycode);
 
-      EventDispatcher.dispatch(event);
+      EventRegistry.register(event);
     });
 
     GLFW.glfwSetMouseButtonCallback(window, (long window, int button, int action, int mods) -> {
@@ -117,12 +118,12 @@ public class WindowsWindow implements Window {
         case GLFW.GLFW_PRESS -> {
           var event = new MouseButtonPressedEvent(button);
 
-          EventDispatcher.dispatch(event);
+          EventRegistry.register(event);
         }
         case GLFW.GLFW_RELEASE -> {
           var event = new MouseButtonReleasedEvent(button);
 
-          EventDispatcher.dispatch(event);
+          EventRegistry.register(event);
         }
       }
     });
@@ -130,13 +131,13 @@ public class WindowsWindow implements Window {
     GLFW.glfwSetScrollCallback(window, (long window, double xOffset, double yOffset) -> {
       var event = new MouseScrolledEvent((float) xOffset, (float) yOffset);
 
-      EventDispatcher.dispatch(event);
+      EventRegistry.register(event);
     });
 
     GLFW.glfwSetCursorPosCallback(window, (long window, double xPos, double yPos) -> {
       var event = new MouseMovedEvent((float) xPos, (float) yPos);
 
-      EventDispatcher.dispatch(event);
+      EventRegistry.register(event);
     });
 
   }

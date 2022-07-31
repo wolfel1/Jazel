@@ -2,8 +2,12 @@ package jazel.core;
 
 import jazel.events.Event;
 import jazel.events.EventDispatcher;
+import jazel.events.EventRegistry;
+import jazel.events.JazelEventListener;
 import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
+import jazel.events.application.listener.WindowCloseEventListener;
+import jazel.events.application.listener.WindowResizeEventListener;
 import org.lwjgl.glfw.GLFW;
 
 public class Application {
@@ -11,7 +15,7 @@ public class Application {
   private static Application instance;
 
   private final Window window;
-  private LayerStack layerStack;
+  private final LayerStack layerStack;
 
   private boolean running;
   private boolean minimized;
@@ -25,6 +29,31 @@ public class Application {
     window = Window.create(new WindowProps("Jazel", 1920, 1080));
     running = true;
     minimized = false;
+
+    EventDispatcher.register(new WindowCloseEventListener() {
+      @Override
+      public boolean onWindowClose(WindowCloseEvent event) {
+        Log.getCoreLogger().info("{}", event);
+        running = false;
+
+        return true;
+      }
+    });
+
+    EventDispatcher.register(new WindowResizeEventListener() {
+      @Override
+      public boolean onWindowResize(WindowResizeEvent event) {
+        Log.getCoreLogger().info("{}", event);
+        if (event.getWidth() == 0 && event.getHeight() == 0) {
+          minimized = true;
+          return true;
+        }
+
+        minimized = false;
+
+        return true;
+      }
+    });
   }
 
   public void run() {
@@ -38,12 +67,13 @@ public class Application {
       }
 
       window.onUpdate();
+
+      EventRegistry.handleEvents();
     }
   }
 
   public void onEvent(Event event) {
-    EventDispatcher.dispatch(event);
-
+    Log.getCoreLogger().info("{}", event);
     var iterator = layerStack.getLayers().descendingIterator();
     while (iterator.hasNext()) {
       if (!event.isHandled()) {
@@ -60,23 +90,6 @@ public class Application {
   public void pushOverlay(Layer overlay) {
     layerStack.pushOverlay(overlay);
     overlay.onAttach();
-  }
-
-  public boolean onWindowClose(WindowCloseEvent event) {
-    running = false;
-
-    return true;
-  }
-
-  public boolean onWindowResize(WindowResizeEvent event) {
-    if (event.getWidth() == 0 && event.getHeight() == 0) {
-      minimized = true;
-      return false;
-    }
-
-    minimized = false;
-
-    return true;
   }
 
   public static Application getInstance() {
