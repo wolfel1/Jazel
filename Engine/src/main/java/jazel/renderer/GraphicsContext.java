@@ -2,6 +2,7 @@ package jazel.renderer;
 
 import jazel.core.Log;
 import jazel.renderer.enumeration.Platform;
+import platform.opengl.OpenGLContext;
 
 public interface  GraphicsContext {
 
@@ -16,7 +17,7 @@ public interface  GraphicsContext {
   static GraphicsContext create(long window) {
     switch (RendererAPI.getAPI()) {
       case NONE: Log.getCoreLogger().error("RendererAPI NONE is not supported!");
-      case OPENGL: return null;
+      case OPENGL: return new OpenGLContext(window);
     }
     Log.getCoreLogger().error("Unknown RendererAPI!");
 

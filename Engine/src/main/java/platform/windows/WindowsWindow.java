@@ -51,7 +51,7 @@ public class WindowsWindow implements Window {
 
     if(!glfwInitialized) {
       boolean success = GLFW.glfwInit();
-      Core.assertion(success,"Could not initialize GLFW!");
+      Core.assertion(!success,"Could not initialize GLFW!");
       GLFW.glfwSetErrorCallback(
           (error, description) -> Log.getCoreLogger().error("GLFW Error ({}): {}", error, GLFWErrorCallback.getDescription(description)));
     }
@@ -64,7 +64,7 @@ public class WindowsWindow implements Window {
 
     context = GraphicsContext.create(window);
     Core.assertion(context == null, "Unknown context!");
-    //context.init();
+    context.init();
 
     setVSync(true);
 
@@ -146,7 +146,7 @@ public class WindowsWindow implements Window {
   public void onUpdate() {
     GLFW.glfwPollEvents();
 
-    //context.swapBuffers();
+    context.swapBuffers();
   }
 
   @Override
@@ -180,7 +180,8 @@ public class WindowsWindow implements Window {
     return window;
   }
 
-  private void shutdown() {
+  @Override
+  public void shutdown() {
     GLFW.glfwDestroyWindow(window);
 
     Log.getCoreLogger().info("Terminate GLFW");

@@ -21,7 +21,7 @@ public class Application {
   private boolean minimized;
 
   public Application() {
-    Core.assertion(instance == null, "Application already exists");
+    Core.assertion(instance != null, "Application already exists");
 
     instance = this;
     layerStack = new LayerStack();
@@ -70,6 +70,8 @@ public class Application {
 
       EventRegistry.handleEvents();
     }
+
+    window.shutdown();
   }
 
   public void onEvent(Event event) {

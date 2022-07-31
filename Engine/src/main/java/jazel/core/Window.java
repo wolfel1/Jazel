@@ -17,6 +17,8 @@ public interface Window {
 
   long getNativeWindow();
 
+  void shutdown();
+
   static Window create(WindowProps props) {
     switch (GraphicsContext.getPlatform()) {
       case NONE:
