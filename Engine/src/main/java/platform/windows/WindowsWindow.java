@@ -23,7 +23,6 @@ import jazel.core.Core;
 import jazel.core.Log;
 import jazel.core.Window;
 import jazel.core.WindowProps;
-import jazel.events.EventDispatcher;
 import jazel.events.EventRegistry;
 import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
@@ -69,12 +68,13 @@ public class WindowsWindow implements Window {
     if(!glfwInitialized) {
       boolean success = glfwInit();
       Core.assertion(!success,"Could not initialize GLFW!");
+      glfwInitialized = true;
       glfwSetErrorCallback(
           (error, description) -> Log.getCoreLogger().error("GLFW Error ({}): {}", error, GLFWErrorCallback.getDescription(description)));
     }
 
     if(RendererAPI.getAPI() == API.OPENGL) {
-    glfwWindowHint(GLFW.GLFW_OPENGL_DEBUG_CONTEXT, GLFW.GLFW_TRUE);
+      glfwWindowHint(GLFW.GLFW_OPENGL_DEBUG_CONTEXT, GLFW.GLFW_TRUE);
     }
 
     window = glfwCreateWindow(data.width, data.height, data.title, NULL, NULL);
