@@ -1,5 +1,7 @@
 package jazel.events;
 
+import jazel.core.Application;
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -16,6 +18,8 @@ public class EventDispatcher {
   }
 
   public void dispatch(Event event) {
+    var app = Application.getInstance();
+    app.onEvent(event);
     for (JazelEventListener listener : listenerSet) {
       if (event.getType() == listener.getHandledEventType()) {
         listener.onEvent(event);

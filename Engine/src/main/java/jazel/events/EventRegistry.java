@@ -10,10 +10,7 @@ public class EventRegistry {
   private static final EventDispatcher dispatcher = new EventDispatcher();
 
   public static void register(Event event) {
-    var app = Application.getInstance();
-    app.onEvent(event);
     if (!event.isHandled()) {
-
       eventRegister.add(event);
     }
   }

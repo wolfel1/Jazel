@@ -10,6 +10,8 @@ import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
 import jazel.events.application.listener.WindowCloseEventListener;
 import jazel.events.application.listener.WindowResizeEventListener;
+import jazel.events.enumeration.EventType;
+import jazel.events.key.KeyReleasedEvent;
 import lombok.Getter;
 import org.lwjgl.glfw.GLFW;
 
@@ -78,7 +80,11 @@ public class Application {
   }
 
   public void onEvent(Event event) {
-    Log.getCoreLogger().info("{}", event);
+
+    if (event.getType() == EventType.KEY_RELEASED) {
+      KeyReleasedEvent e = (KeyReleasedEvent) event;
+      EventRegistry.register(new WindowCloseEvent());
+    }
     var iterator = layerStack.getLayers().descendingIterator();
     while (iterator.hasNext()) {
       if (!event.isHandled()) {
