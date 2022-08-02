@@ -8,6 +8,7 @@ import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
 import jazel.events.enumeration.EventType;
 import jazel.events.key.KeyReleasedEvent;
+import jazel.gui.ImGuiLayer;
 import lombok.Getter;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
@@ -19,6 +20,8 @@ public class Application {
     @Getter
     private final Window window;
     private final LayerStack layerStack;
+
+    private ImGuiLayer imGuiLayer;
 
     private boolean running;
     private boolean minimized;
@@ -33,7 +36,9 @@ public class Application {
         running = true;
         minimized = false;
 
-        
+        imGuiLayer = new ImGuiLayer();
+        pushOverlay(imGuiLayer);
+
         EventDispatcher.register(this);
     }
 
