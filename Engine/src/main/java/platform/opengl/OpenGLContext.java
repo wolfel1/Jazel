@@ -35,10 +35,11 @@ public class OpenGLContext implements GraphicsContext {
     Log.getCoreLogger().info("  Renderer: {}", glGetString(GL_RENDERER));
     Log.getCoreLogger().info("  Version: {}", glGetString(GL_VERSION));
 
-    Log.getCoreLogger().info("  OpenGL version: {}.{}",
-        glGetInteger(GL_MAJOR_VERSION),
-        glGetInteger(GL_MINOR_VERSION));
-
+    Log.getCoreLogger()
+        .info(
+            "  OpenGL version: {}.{}",
+            glGetInteger(GL_MAJOR_VERSION),
+            glGetInteger(GL_MINOR_VERSION));
   }
 
   @Override

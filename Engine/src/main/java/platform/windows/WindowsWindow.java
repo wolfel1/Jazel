@@ -1,24 +1,5 @@
 package platform.windows;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_REPEAT;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetCharCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowCloseCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
 import jazel.core.Core;
 import jazel.core.Log;
 import jazel.core.Window;
@@ -38,6 +19,9 @@ import jazel.renderer.RendererAPI;
 import jazel.renderer.enumeration.API;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class WindowsWindow implements Window {
 
@@ -65,15 +49,18 @@ public class WindowsWindow implements Window {
 
     Log.getCoreLogger().info("Creating window {}", props);
 
-    if(!glfwInitialized) {
+    if (!glfwInitialized) {
       boolean success = glfwInit();
-      Core.assertion(!success,"Could not initialize GLFW!");
+      Core.assertion(!success, "Could not initialize GLFW!");
       glfwInitialized = true;
       glfwSetErrorCallback(
-          (error, description) -> Log.getCoreLogger().error("GLFW Error ({}): {}", error, GLFWErrorCallback.getDescription(description)));
+          (error, description) ->
+              Log.getCoreLogger()
+                  .error(
+                      "GLFW Error ({}): {}", error, GLFWErrorCallback.getDescription(description)));
     }
 
-    if(RendererAPI.getAPI() == API.OPENGL) {
+    if (RendererAPI.getAPI() == API.OPENGL) {
       glfwWindowHint(GLFW.GLFW_OPENGL_DEBUG_CONTEXT, GLFW.GLFW_TRUE);
     }
 
@@ -89,74 +76,92 @@ public class WindowsWindow implements Window {
   }
 
   private void setCallbacks() {
-    glfwSetWindowSizeCallback(window, (long window, int width, int height) -> {
-      data.width = width;
-      data.height = height;
+    glfwSetWindowSizeCallback(
+        window,
+        (long window, int width, int height) -> {
+          data.width = width;
+          data.height = height;
 
-      var event = new WindowResizeEvent(width, height);
-
-      EventRegistry.register(event);
-    });
-
-    glfwSetWindowCloseCallback(window, (long window) -> {
-      var event = new WindowCloseEvent();
-
-      EventRegistry.register(event);
-    });
-
-    glfwSetKeyCallback(window, (long window, int key, int scanCode, int action, int mods) -> {
-      switch (action) {
-        case GLFW_PRESS -> {
-          var event = new KeyPressedEvent(key, 0);
+          var event = new WindowResizeEvent(width, height);
 
           EventRegistry.register(event);
-        }
-        case GLFW_RELEASE -> {
-          var event = new KeyReleasedEvent(key);
+        });
+
+    glfwSetWindowCloseCallback(
+        window,
+        (long window) -> {
+          var event = new WindowCloseEvent();
 
           EventRegistry.register(event);
-        }
-        case GLFW_REPEAT -> {
-          var event = new KeyPressedEvent(key,1);
+        });
+
+    glfwSetKeyCallback(
+        window,
+        (long window, int key, int scanCode, int action, int mods) -> {
+          switch (action) {
+            case GLFW_PRESS:
+              {
+                var event = new KeyPressedEvent(key, 0);
+
+                EventRegistry.register(event);
+              }
+            case GLFW_RELEASE:
+              {
+                var event = new KeyReleasedEvent(key);
+
+                EventRegistry.register(event);
+              }
+            case GLFW_REPEAT:
+              {
+                var event = new KeyPressedEvent(key, 1);
+
+                EventRegistry.register(event);
+              }
+          }
+        });
+
+    glfwSetCharCallback(
+        window,
+        (long window, int keycode) -> {
+          var event = new KeyTypedEvent(keycode);
 
           EventRegistry.register(event);
-        }
-      }
-    });
+        });
 
-    glfwSetCharCallback(window, (long window, int keycode) -> {
-      var event = new KeyTypedEvent(keycode);
+    glfwSetMouseButtonCallback(
+        window,
+        (long window, int button, int action, int mods) -> {
+          switch (action) {
+            case GLFW_PRESS:
+              {
+                var event = new MouseButtonPressedEvent(button);
 
-      EventRegistry.register(event);
-    });
+                EventRegistry.register(event);
+              }
+            case GLFW_RELEASE:
+              {
+                var event = new MouseButtonReleasedEvent(button);
 
-    glfwSetMouseButtonCallback(window, (long window, int button, int action, int mods) -> {
-      switch (action) {
-        case GLFW_PRESS -> {
-          var event = new MouseButtonPressedEvent(button);
+                EventRegistry.register(event);
+              }
+          }
+        });
+
+    glfwSetScrollCallback(
+        window,
+        (long window, double xOffset, double yOffset) -> {
+          var event = new MouseScrolledEvent((float) xOffset, (float) yOffset);
 
           EventRegistry.register(event);
-        }
-        case GLFW_RELEASE -> {
-          var event = new MouseButtonReleasedEvent(button);
+        });
+
+    glfwSetCursorPosCallback(
+        window,
+        (long window, double xPos, double yPos) -> {
+          var event = new MouseMovedEvent((float) xPos, (float) yPos);
 
           EventRegistry.register(event);
-        }
-      }
-    });
-
-    glfwSetScrollCallback(window, (long window, double xOffset, double yOffset) -> {
-      var event = new MouseScrolledEvent((float) xOffset, (float) yOffset);
-
-      EventRegistry.register(event);
-    });
-
-    glfwSetCursorPosCallback(window, (long window, double xPos, double yPos) -> {
-      var event = new MouseMovedEvent((float) xPos, (float) yPos);
-
-      EventRegistry.register(event);
-    });
-
+        });
   }
 
   @Override

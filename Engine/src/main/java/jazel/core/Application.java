@@ -15,98 +15,97 @@ import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
 public class Application {
 
-    private static Application instance;
+  private static Application instance;
 
-    @Getter
-    private final Window window;
-    private final LayerStack layerStack;
+  @Getter private final Window window;
+  private final LayerStack layerStack;
 
-    private ImGuiLayer imGuiLayer;
+  private ImGuiLayer imGuiLayer;
 
-    private boolean running;
-    private boolean minimized;
+  private boolean running;
+  private boolean minimized;
 
-    public Application() {
-        Core.assertion(instance != null, "Application already exists");
+  public Application() {
+    Core.assertion(instance != null, "Application already exists");
 
-        instance = this;
-        layerStack = new LayerStack();
+    instance = this;
+    layerStack = new LayerStack();
 
-        window = Window.create(new WindowProps("Jazel", 1920, 1080));
-        running = true;
-        minimized = false;
+    window = Window.create(new WindowProps("Jazel", 1920, 1080));
+    running = true;
+    minimized = false;
 
-        imGuiLayer = new ImGuiLayer();
-        pushOverlay(imGuiLayer);
+    imGuiLayer = new ImGuiLayer();
+    pushOverlay(imGuiLayer);
 
-        EventDispatcher.register(this);
-    }
+    EventDispatcher.register(this);
+  }
 
-    public void run() {
-        while (running) {
-            float time = (float) glfwGetTime();
+  public void run() {
+    while (running) {
+      float time = (float) glfwGetTime();
 
-            if (!minimized) {
-                for (Layer layer : layerStack.getLayers()) {
-                    layer.onUpdate();
-                }
-            }
-
-            window.onUpdate();
-
-            EventRegistry.handleEvents();
+      if (!minimized) {
+        for (Layer layer : layerStack.getLayers()) {
+          layer.onUpdate();
         }
+      }
 
-        window.shutdown();
+      window.onUpdate();
+
+      EventRegistry.handleEvents();
     }
 
-    public void onEvent(Event event) {
+    window.shutdown();
+  }
 
-        if (event.getType() == EventType.KEY_RELEASED) {
-            KeyReleasedEvent e = (KeyReleasedEvent) event;
-            EventRegistry.register(new WindowCloseEvent());
-            event.setHandled(true);
-        }
-        var iterator = layerStack.getLayers().descendingIterator();
-        while (iterator.hasNext()) {
-            if (!event.isHandled()) {
-                iterator.next().onEvent(event);
-            }
-        }
+  public void onEvent(Event event) {
+
+    if (event.getType() == EventType.KEY_RELEASED) {
+      KeyReleasedEvent e = (KeyReleasedEvent) event;
+      EventRegistry.register(new WindowCloseEvent());
+      event.setHandled(true);
+    }
+    var iterator = layerStack.getLayers().descendingIterator();
+    while (iterator.hasNext()) {
+      if (!event.isHandled()) {
+        iterator.next().onEvent(event);
+      }
+    }
+  }
+
+  @EventHandler(type = EventType.WINDOW_CLOSE)
+  public boolean onWindowClose(WindowCloseEvent event) {
+    Log.getCoreLogger().info("{}", event);
+    running = false;
+
+    return true;
+  }
+
+  @EventHandler(type = EventType.WINDOW_RESIZE)
+  public boolean onWindowResize(WindowResizeEvent event) {
+    Log.getCoreLogger().info("{}", event);
+    if (event.getWidth() == 0 && event.getHeight() == 0) {
+      minimized = true;
+      return true;
     }
 
-    @EventHandler(type = EventType.WINDOW_CLOSE)
-    public boolean onWindowClose(WindowCloseEvent event) {
-        Log.getCoreLogger().info("{}", event);
-        running = false;
+    minimized = false;
 
-        return true;
-    }
+    return true;
+  }
 
-    @EventHandler(type = EventType.WINDOW_RESIZE)
-    public boolean onWindowResize(WindowResizeEvent event) {
-        Log.getCoreLogger().info("{}", event);
-        if (event.getWidth() == 0 && event.getHeight() == 0) {
-            minimized = true;
-            return true;
-        }
+  public void pushLayer(Layer layer) {
+    layerStack.pushLayer(layer);
+    layer.onAttach();
+  }
 
-        minimized = false;
+  public void pushOverlay(Layer overlay) {
+    layerStack.pushOverlay(overlay);
+    overlay.onAttach();
+  }
 
-        return true;
-    }
-
-    public void pushLayer(Layer layer) {
-        layerStack.pushLayer(layer);
-        layer.onAttach();
-    }
-
-    public void pushOverlay(Layer overlay) {
-        layerStack.pushOverlay(overlay);
-        overlay.onAttach();
-    }
-
-    public static Application getInstance() {
-        return instance;
-    }
+  public static Application getInstance() {
+    return instance;
+  }
 }
