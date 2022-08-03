@@ -1,4 +1,4 @@
-package jazel.core;
+package jazel.core.layer;
 
 import jazel.events.Event;
 import lombok.AllArgsConstructor;

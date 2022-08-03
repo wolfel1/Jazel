@@ -1,4 +1,4 @@
-package jazel.core;
+package jazel.core.window;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

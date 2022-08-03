@@ -8,7 +8,7 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import jazel.core.Application;
-import jazel.core.Layer;
+import jazel.core.layer.Layer;
 import jazel.events.Event;
 import jazel.events.enumeration.EventCategory;
 import org.lwjgl.glfw.GLFW;

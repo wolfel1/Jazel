@@ -1,5 +1,10 @@
 package jazel.core;
 
+import jazel.core.encoding.KeyCode;
+import jazel.core.layer.Layer;
+import jazel.core.layer.LayerStack;
+import jazel.core.window.Window;
+import jazel.core.window.WindowProps;
 import jazel.events.Event;
 import jazel.events.EventDispatcher;
 import jazel.events.EventRegistry;
@@ -63,13 +68,17 @@ public class Application {
 
     if (event.getType() == EventType.KEY_RELEASED) {
       KeyReleasedEvent e = (KeyReleasedEvent) event;
-      EventRegistry.register(new WindowCloseEvent());
-      event.setHandled(true);
+      if (e.getKeyCode() == KeyCode.ESCAPE) {
+        EventRegistry.register(new WindowCloseEvent());
+        event.setHandled(true);
+      }
     }
     var iterator = layerStack.getLayers().descendingIterator();
     while (iterator.hasNext()) {
       if (!event.isHandled()) {
         iterator.next().onEvent(event);
+      } else {
+        iterator.next();
       }
     }
   }

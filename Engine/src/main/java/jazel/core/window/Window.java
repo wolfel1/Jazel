@@ -1,5 +1,6 @@
-package jazel.core;
+package jazel.core.window;
 
+import jazel.core.Log;
 import jazel.renderer.GraphicsContext;
 import platform.windows.WindowsWindow;
 

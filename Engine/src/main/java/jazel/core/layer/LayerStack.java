@@ -1,7 +1,8 @@
-package jazel.core;
+package jazel.core.layer;
+
+import lombok.Getter;
 
 import java.util.LinkedList;
-import lombok.Getter;
 
 public class LayerStack {
   @Getter private final LinkedList<Layer> layers = new LinkedList<>();

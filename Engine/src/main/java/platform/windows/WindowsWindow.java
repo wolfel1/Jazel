@@ -2,8 +2,8 @@ package platform.windows;
 
 import jazel.core.Core;
 import jazel.core.Log;
-import jazel.core.Window;
-import jazel.core.WindowProps;
+import jazel.core.window.Window;
+import jazel.core.window.WindowProps;
 import jazel.events.EventRegistry;
 import jazel.events.application.WindowCloseEvent;
 import jazel.events.application.WindowResizeEvent;
