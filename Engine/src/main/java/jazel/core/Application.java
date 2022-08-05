@@ -97,7 +97,6 @@ public class Application {
 
   @EventHandler(type = EventType.WINDOW_CLOSE)
   public boolean onWindowClose(WindowCloseEvent event) {
-    Log.getCoreLogger().info("{}", event);
     running = false;
 
     return true;
@@ -105,7 +104,6 @@ public class Application {
 
   @EventHandler(type = EventType.WINDOW_RESIZE)
   public boolean onWindowResize(WindowResizeEvent event) {
-    Log.getCoreLogger().info("{}", event);
     if (event.getWidth() == 0 && event.getHeight() == 0) {
       minimized = true;
       return true;

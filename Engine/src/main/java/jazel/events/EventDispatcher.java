@@ -69,9 +69,9 @@ public class EventDispatcher {
     var app = Application.getInstance();
     app.onEvent(event);
 
-    var listenersForEvent = listenersByEventClass.get(event.getType());
-    if (listenersForEvent != null) {
-      for (var listener : listenersForEvent) {
+    var eventListeners = listenersByEventClass.get(event.getType());
+    if (eventListeners != null) {
+      for (var listener : eventListeners) {
         if (!event.isHandled()) {
           try {
             listener.listenerMethod.setAccessible(true);
