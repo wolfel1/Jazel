@@ -2,23 +2,17 @@ package jazel.core.window;
 
 import platform.window.WindowImpl;
 
-public interface Window {
+public abstract class Window {
 
-  void onUpdate();
+  public abstract void onUpdate();
+  public abstract int getWidth();
+  public abstract int getHeight();
+  public abstract void setVSync(boolean enabled);
+  public abstract boolean isVSync();
+  public abstract long getNativeWindow();
+  public abstract void shutdown();
 
-  int getWidth();
-
-  int getHeight();
-
-  void setVSync(boolean enabled);
-
-  boolean isVSync();
-
-  long getNativeWindow();
-
-  void shutdown();
-
-  static Window create(WindowProps props) {
+  public static Window create(WindowProps props) {
         return new WindowImpl(props);
   }
 }

@@ -61,8 +61,6 @@ public class Application {
           layer.onUpdate();
         }
       }
-      RenderCommand.setClearColor(new Vector4f(0.1f, 0.1f, 0.1f, 1.0f));
-      RenderCommand.clear();
 
       imGuiLayer.begin();
       for (Layer layer : layerStack.getLayers()) {

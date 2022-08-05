@@ -3,7 +3,6 @@ package jazel.gui;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.ImGuiStyle;
-import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -30,6 +29,7 @@ public class ImGuiLayer extends Layer {
     io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
     io.setConfigFlags(ImGuiConfigFlags.DockingEnable);
     io.setConfigFlags(ImGuiConfigFlags.ViewportsEnable);
+    io.setFontGlobalScale(2);
 
     ImGui.styleColorsLight();
 
@@ -37,10 +37,13 @@ public class ImGuiLayer extends Layer {
     style.setWindowRounding(0.0f);
 
     var app = Application.getInstance();
-    var window = app.getWindow().getNativeWindow();
+    var window = app.getWindow();
 
-    imGuiImplGlfw.init(window, true);
+    imGuiImplGlfw.init(window.getNativeWindow(), true);
     imGuiImplGl3.init("#version 410");
+
+
+
   }
 
   @Override
@@ -62,10 +65,7 @@ public class ImGuiLayer extends Layer {
   }
 
   @Override
-  public void onGuiRender() {
-
-    ImGui.showDemoWindow();
-  }
+  public void onGuiRender() {}
 
   public void begin() {
     imGuiImplGlfw.newFrame();
