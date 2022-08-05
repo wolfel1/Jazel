@@ -1,20 +1,14 @@
 package jazel.renderer;
 
 import jazel.core.Log;
-import jazel.renderer.enumeration.Platform;
 import platform.opengl.OpenGLContext;
 
 public interface GraphicsContext {
-
-  static Platform platform = Platform.WINDOWS;
 
   void init();
 
   void swapBuffers();
 
-  static Platform getPlatform() {
-    return platform;
-  }
 
   static GraphicsContext create(long window) {
     switch (RendererAPI.getAPI()) {

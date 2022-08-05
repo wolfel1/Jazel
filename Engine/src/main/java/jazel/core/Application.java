@@ -1,5 +1,6 @@
 package jazel.core;
 
+import imgui.ImGui;
 import jazel.core.encoding.KeyCode;
 import jazel.core.layer.Layer;
 import jazel.core.layer.LayerStack;
@@ -14,7 +15,10 @@ import jazel.events.application.WindowResizeEvent;
 import jazel.events.enumeration.EventType;
 import jazel.events.key.KeyReleasedEvent;
 import jazel.gui.ImGuiLayer;
+import jazel.renderer.RenderCommand;
+import jazel.renderer.Renderer;
 import lombok.Getter;
+import org.joml.Vector4f;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
@@ -40,6 +44,8 @@ public class Application {
     running = true;
     minimized = false;
 
+    Renderer.init();
+
     imGuiLayer = new ImGuiLayer();
     pushOverlay(imGuiLayer);
 
@@ -55,6 +61,14 @@ public class Application {
           layer.onUpdate();
         }
       }
+      RenderCommand.setClearColor(new Vector4f(0.1f, 0.1f, 0.1f, 1.0f));
+      RenderCommand.clear();
+
+      imGuiLayer.begin();
+      for (Layer layer : layerStack.getLayers()) {
+        layer.onGuiRender();
+      }
+      imGuiLayer.end();
 
       window.onUpdate();
 

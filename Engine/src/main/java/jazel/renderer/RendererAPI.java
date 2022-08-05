@@ -3,10 +3,11 @@ package jazel.renderer;
 import jazel.core.Log;
 import jazel.renderer.enumeration.API;
 import org.joml.Vector4f;
+import platform.opengl.OpenGLRendererAPI;
 
 public interface RendererAPI {
 
-  static API api = API.OPENGL;
+  API api = API.OPENGL;
 
   void init();
 
@@ -27,7 +28,7 @@ public interface RendererAPI {
       case NONE:
         Log.getCoreLogger().error("RendererAPI NONE is not supported!");
       case OPENGL:
-        return null;
+        return new OpenGLRendererAPI();
     }
     Log.getCoreLogger().error("Unknown RendererAPI!");
 

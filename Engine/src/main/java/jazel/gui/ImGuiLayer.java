@@ -35,7 +35,6 @@ public class ImGuiLayer extends Layer {
 
     ImGuiStyle style = ImGui.getStyle();
     style.setWindowRounding(0.0f);
-    style.setColor(ImGuiCol.WindowBg, 0, 0, 0, 1);
 
     var app = Application.getInstance();
     var window = app.getWindow().getNativeWindow();
@@ -60,6 +59,12 @@ public class ImGuiLayer extends Layer {
 
     event.setHandled(event.isInCategory(EventCategory.MOUSE) && io.getWantCaptureMouse());
     event.setHandled(event.isInCategory(EventCategory.KEYBOARD) && io.getWantCaptureKeyboard());
+  }
+
+  @Override
+  public void onGuiRender() {
+
+    ImGui.showDemoWindow();
   }
 
   public void begin() {

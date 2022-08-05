@@ -17,4 +17,6 @@ public abstract class Layer {
   public abstract void onUpdate();
 
   public abstract void onEvent(Event event);
+
+  public abstract void onGuiRender();
 }

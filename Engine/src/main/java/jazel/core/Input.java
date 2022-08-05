@@ -33,7 +33,7 @@ public abstract class Input {
   public static void setMousePosition(Vector2f position) {
     instance.setMousePositionImpl(position);
   }
-  
+
   public static void setCursorMode(int mode) {
     instance.setCursorModeImpl(mode);
   }
