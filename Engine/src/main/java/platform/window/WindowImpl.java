@@ -1,6 +1,7 @@
-package platform.windows;
+package platform.window;
 
 import jazel.core.Core;
+import jazel.core.Input;
 import jazel.core.Log;
 import jazel.core.window.Window;
 import jazel.core.window.WindowProps;
@@ -23,7 +24,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class WindowsWindow implements Window {
+public class WindowImpl implements Window {
 
   private static class WindowData {
     String title;
@@ -38,8 +39,9 @@ public class WindowsWindow implements Window {
 
   private boolean glfwInitialized;
 
-  public WindowsWindow(WindowProps props) {
+  public WindowImpl(WindowProps props) {
     init(props);
+    Input.create();
   }
 
   private void init(WindowProps props) {

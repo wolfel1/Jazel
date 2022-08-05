@@ -1,8 +1,6 @@
 package jazel.core.window;
 
-import jazel.core.Log;
-import jazel.renderer.GraphicsContext;
-import platform.windows.WindowsWindow;
+import platform.window.WindowImpl;
 
 public interface Window {
 
@@ -21,14 +19,6 @@ public interface Window {
   void shutdown();
 
   static Window create(WindowProps props) {
-    switch (GraphicsContext.getPlatform()) {
-      case NONE:
-        Log.getCoreLogger().error("RendererAPI NONE is not supported!");
-      case WINDOWS:
-        return new WindowsWindow(props);
-    }
-    Log.getCoreLogger().error("Unknown RendererAPI!");
-
-    return null;
-  };
+        return new WindowImpl(props);
+  }
 }
