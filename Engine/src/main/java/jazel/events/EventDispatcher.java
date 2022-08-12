@@ -88,14 +88,7 @@ public class EventDispatcher {
     }
   }
 
-  private static class Listener {
+  private record Listener(Object listenerClassInstance, Method listenerMethod) {
 
-    private final Object listenerClassInstance;
-    private final Method listenerMethod;
-
-    private Listener(Object listenerClassInstance, Method listenerMethod) {
-      this.listenerClassInstance = listenerClassInstance;
-      this.listenerMethod = listenerMethod;
-    }
   }
 }
