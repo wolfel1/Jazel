@@ -18,32 +18,29 @@ import org.lwjgl.opengl.GL46;
 
 public class OpenGLContext implements GraphicsContext {
 
-  private final long window;
+    private final long window;
 
-  public OpenGLContext(long window) {
-    this.window = window;
-  }
+    public OpenGLContext(long window) {
+        this.window = window;
+    }
 
-  @Override
-  public void init() {
-    glfwMakeContextCurrent(window);
+    @Override
+    public void init() {
+        glfwMakeContextCurrent(window);
 
-    GL.createCapabilities(true);
+        GL.createCapabilities(true);
 
-    Log.getCoreLogger().info("OpenGL Info:");
-    Log.getCoreLogger().info("  Vendor: {}", glGetString(GL_VENDOR));
-    Log.getCoreLogger().info("  Renderer: {}", glGetString(GL_RENDERER));
-    Log.getCoreLogger().info("  Version: {}", glGetString(GL_VERSION));
+        Log.getCoreLogger().info("OpenGL Info:");
+        Log.getCoreLogger().info("  Vendor: {}", glGetString(GL_VENDOR));
+        Log.getCoreLogger().info("  Renderer: {}", glGetString(GL_RENDERER));
+        Log.getCoreLogger().info("  Version: {}", glGetString(GL_VERSION));
 
-    Log.getCoreLogger()
-        .info(
-            "  OpenGL version: {}.{}",
-            glGetInteger(GL_MAJOR_VERSION),
-            glGetInteger(GL_MINOR_VERSION));
-  }
+        Log.getCoreLogger().info("  OpenGL version: {}.{}", glGetInteger(GL_MAJOR_VERSION),
+                glGetInteger(GL_MINOR_VERSION));
+    }
 
-  @Override
-  public void swapBuffers() {
-    glfwSwapBuffers(window);
-  }
+    @Override
+    public void swapBuffers() {
+        glfwSwapBuffers(window);
+    }
 }

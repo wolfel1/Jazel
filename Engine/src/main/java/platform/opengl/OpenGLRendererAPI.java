@@ -35,47 +35,46 @@ import org.lwjgl.opengl.GLDebugMessageCallbackI;
 
 public class OpenGLRendererAPI implements RendererAPI {
 
-  @Override
-  public void init() {
+    @Override
+    public void init() {
 
-    //Debug
-    glEnable(GL_DEBUG_OUTPUT);
-    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback((int source, int type, int id, int severity, int length, long message, long userParam) -> {
-      switch (severity) {
-        case GL_DEBUG_SEVERITY_HIGH -> Log.getCoreLogger().error(getMessage(length, message));
-        case GL_DEBUG_SEVERITY_MEDIUM -> Log.getCoreLogger().debug(getMessage(length, message));
-        case GL_DEBUG_SEVERITY_LOW -> Log.getCoreLogger().warn(getMessage(length, message));
-        case GL_DEBUG_SEVERITY_NOTIFICATION -> Log.getCoreLogger().trace(getMessage(length, message));
-      }
-    }, NULL);
-    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION,
-        (IntBuffer) null, false);
+        // Debug
+        glEnable(GL_DEBUG_OUTPUT);
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        glDebugMessageCallback(
+                (int source, int type, int id, int severity, int length, long message, long userParam) -> {
+                    switch (severity) {
+                    case GL_DEBUG_SEVERITY_HIGH -> Log.getCoreLogger().error(getMessage(length, message));
+                    case GL_DEBUG_SEVERITY_MEDIUM -> Log.getCoreLogger().debug(getMessage(length, message));
+                    case GL_DEBUG_SEVERITY_LOW -> Log.getCoreLogger().warn(getMessage(length, message));
+                    case GL_DEBUG_SEVERITY_NOTIFICATION -> Log.getCoreLogger().trace(getMessage(length, message));
+                    }
+                }, NULL);
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, (IntBuffer) null, false);
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_DEPTH_TEST);
+    }
 
-    glEnable(GL_DEPTH_TEST);
-  }
+    @Override
+    public void setViewport(int x, int y, int width, int height) {
+        glViewport(x, y, width, height);
+    }
 
-  @Override
-  public void setViewport(int x, int y, int width, int height) {
-    glViewport(x, y, width, height);
-  }
+    @Override
+    public void setClearColor(Vector4f color) {
+        glClearColor(color.x, color.y, color.z, color.w);
+    }
 
-  @Override
-  public void setClearColor(Vector4f color) {
-    glClearColor(color.x, color.y, color.z, color.w);
-  }
+    @Override
+    public void clear() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
-  @Override
-  public void clear() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  }
+    @Override
+    public void drawIndexed() {
 
-  @Override
-  public void drawIndexed() {
-
-  }
+    }
 }

@@ -6,7 +6,7 @@ import jazel.events.enumeration.EventType;
 
 public class AppRenderEvent extends Event {
 
-  public AppRenderEvent() {
-    super(EventType.APP_RENDER, EventCategory.APPLICATION);
-  }
+    public AppRenderEvent() {
+        super(EventType.APP_RENDER, EventCategory.APPLICATION);
+    }
 }

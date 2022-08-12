@@ -6,7 +6,7 @@ import jazel.events.enumeration.EventType;
 
 public class WindowCloseEvent extends Event {
 
-  public WindowCloseEvent() {
-    super(EventType.WINDOW_CLOSE, EventCategory.APPLICATION);
-  }
+    public WindowCloseEvent() {
+        super(EventType.WINDOW_CLOSE, EventCategory.APPLICATION);
+    }
 }
