@@ -28,7 +28,7 @@ import jazel.engine.core.Log;
 import jazel.engine.renderer.RendererAPI;
 import org.joml.Vector4f;
 
-public class OpenGLRendererAPI implements RendererAPI {
+public class OpenGLRendererAPI extends RendererAPI {
 
     @Override
     public void init() {

@@ -8,7 +8,7 @@ import org.joml.Vector4f;
 public class SandboxLayer extends Layer {
 
     public SandboxLayer() {
-        super("jazel.Sandbox");
+        super("Sandbox");
     }
 
     @Override

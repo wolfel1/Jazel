@@ -35,6 +35,8 @@ public class Application {
     public Application() {
         Core.assertion(instance != null, "Application already exists");
 
+        Core.checkEnvironment();
+
         instance = this;
         layerStack = new LayerStack();
 
