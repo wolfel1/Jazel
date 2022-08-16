@@ -14,7 +14,7 @@ import jazel.engine.events.application.WindowResizeEvent;
 import jazel.engine.events.enumeration.EventType;
 import jazel.engine.events.key.KeyReleasedEvent;
 import jazel.engine.gui.ImGuiLayer;
-import jazel.engine.renderer.Renderer;
+import jazel.engine.renderer.renderer.Renderer;
 import lombok.Getter;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
@@ -110,6 +110,7 @@ public class Application {
         }
 
         minimized = false;
+        Renderer.onWindowResize(event.getWidth(), event.getHeight());
 
         return true;
     }

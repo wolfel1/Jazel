@@ -1,4 +1,4 @@
-package jazel.engine.renderer;
+package jazel.engine.renderer.renderer;
 
 import jazel.engine.core.Core;
 import org.joml.Vector4f;

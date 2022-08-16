@@ -25,7 +25,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.nio.IntBuffer;
 import jazel.engine.core.Log;
-import jazel.engine.renderer.RendererAPI;
+import jazel.engine.renderer.renderer.RendererAPI;
 import org.joml.Vector4f;
 
 public class OpenGLRendererAPI extends RendererAPI {

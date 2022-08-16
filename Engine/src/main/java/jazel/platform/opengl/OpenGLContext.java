@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
 import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
 
 import jazel.engine.core.Log;
-import jazel.engine.renderer.GraphicsContext;
+import jazel.engine.renderer.renderer.GraphicsContext;
 import org.lwjgl.opengl.GL;
 
 public class OpenGLContext implements GraphicsContext {
