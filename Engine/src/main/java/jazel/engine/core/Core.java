@@ -19,6 +19,8 @@ public class Core {
         if (assertion && isDebug) {
             Log.getCoreLogger().error(message);
             throw new RuntimeException();
+        } else if (assertion) {
+            Log.getCoreLogger().error(message);
         }
     }
 
