@@ -15,39 +15,39 @@ import java.nio.FloatBuffer;
 
 public class OpenGLVertexBuffer extends VertexBuffer {
 
-  public OpenGLVertexBuffer(long size) {
-    super(size);
+    public OpenGLVertexBuffer(long size) {
+        super(size);
 
-    rendererID = glCreateBuffers();
-    glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-  }
+        rendererID = glCreateBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID);
+    }
 
-  public OpenGLVertexBuffer(float[] vertices) {
-    super(vertices);
+    public OpenGLVertexBuffer(float[] vertices) {
+        super(vertices);
 
-    rendererID = glCreateBuffers();
-    glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-    glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
-  }
+        rendererID = glCreateBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+    }
 
-  @Override
-  public void bind() {
-    glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-  }
+    @Override
+    public void bind() {
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID);
+    }
 
-  @Override
-  public void unbind() {
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  }
+    @Override
+    public void unbind() {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
 
-  @Override
-  public void setData(FloatBuffer data) {
-    glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-    glBufferData(GL_ARRAY_BUFFER, data.array(), GL_DYNAMIC_DRAW);
-  }
+    @Override
+    public void setData(FloatBuffer data) {
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID);
+        glBufferData(GL_ARRAY_BUFFER, data.array(), GL_DYNAMIC_DRAW);
+    }
 
-  @Override
-  public void destroy() {
-    glDeleteBuffers(rendererID);
-  }
+    @Override
+    public void destroy() {
+        glDeleteBuffers(rendererID);
+    }
 }

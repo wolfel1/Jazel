@@ -11,9 +11,13 @@ public abstract class RendererAPI {
     private static API api = API.OPENGL;
 
     public abstract void init();
+
     public abstract void setViewport(int x, int y, int width, int height);
+
     public abstract void setClearColor(Vector4f color);
+
     public abstract void clear();
+
     public abstract void drawIndexed(VertexArray vertexArray, int vertexBuffer);
 
     public static API getAPI() {

@@ -37,7 +37,6 @@ public class Application {
 
         Core.assertion(instance != null, "Application already exists");
 
-
         instance = this;
         layerStack = new LayerStack();
 

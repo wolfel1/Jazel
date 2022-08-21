@@ -7,29 +7,26 @@ import org.lwjgl.system.MemoryUtil;
 
 public final class QuadVertex {
 
-  public Vector3f position;
-  public Vector4f color;
-  public Vector2f texCoord;
-  public float texIndex;
-  public float tilingFactor;
+    public Vector3f position;
+    public Vector4f color;
+    public Vector2f texCoord;
+    public float texIndex;
+    public float tilingFactor;
 
-  public static int getSize() {
-    return (4 + 4 + 2 + 1 + 1) * Float.SIZE / 8;
-  }
+    public static int getSize() {
+        return (4 + 4 + 2 + 1 + 1) * Float.SIZE / 8;
+    }
 
-  public float[] toArray() {
-    return new float[]{
-            position.x,
-            position.y,
-            position.z
-//            color.x,
-//            color.y,
-//            color.z,
-//            color.w,
-//            texCoord.x,
-//            texCoord.y,
-//            texIndex,
-//            tilingFactor
-    };
-  }
+    public float[] toArray() {
+        return new float[] { position.x, position.y, position.z
+                // color.x,
+                // color.y,
+                // color.z,
+                // color.w,
+                // texCoord.x,
+                // texCoord.y,
+                // texIndex,
+                // tilingFactor
+        };
+    }
 }

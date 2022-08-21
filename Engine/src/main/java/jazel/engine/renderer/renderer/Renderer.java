@@ -17,7 +17,8 @@ import static jazel.engine.renderer.utils.VectorUtils.convertVec4ToVec3;
 
 public class Renderer {
 
-    public static  RenderData renderData = new RenderData();
+    public static RenderData renderData = new RenderData();
+
     public static void init() {
         RenderCommand.init();
 
@@ -27,10 +28,10 @@ public class Renderer {
 
         var bufferElements = new ArrayList<BufferElement>();
         bufferElements.add(new BufferElement("aPosition", ShaderDataType.FLOAT3, false));
-//        bufferElements.add(new BufferElement("aColor", ShaderDataType.FLOAT4, false));
-//        bufferElements.add(new BufferElement("aTexCoord", ShaderDataType.FLOAT2, false));
-//        bufferElements.add(new BufferElement("aTexIndex", ShaderDataType.FLOAT, false));
-//        bufferElements.add(new BufferElement("aTilingFactor", ShaderDataType.FLOAT, false));
+        // bufferElements.add(new BufferElement("aColor", ShaderDataType.FLOAT4, false));
+        // bufferElements.add(new BufferElement("aTexCoord", ShaderDataType.FLOAT2, false));
+        // bufferElements.add(new BufferElement("aTexIndex", ShaderDataType.FLOAT, false));
+        // bufferElements.add(new BufferElement("aTilingFactor", ShaderDataType.FLOAT, false));
         renderData.quadVertexBuffer.setLayout(new BufferLayout(bufferElements));
 
         renderData.quadVertexArray.addVertexBuffer(renderData.quadVertexBuffer);
@@ -73,16 +74,16 @@ public class Renderer {
             flushAndReset();
         }
 
-        var transform = new Matrix4f().translate(position)
-                .scale(new Vector3f(size, 0));
-        
+        var transform = new Matrix4f().translate(position).scale(new Vector3f(size, 0));
+
         draw(transform, color, 0, 0);
     }
 
     private static void draw(Matrix4f transformMatrix, Vector4f color, float textureIndex, float tilingFactor) {
         for (var i = 0; i < 4; i++) {
             renderData.quadVertices[renderData.quadVertexIndex] = new QuadVertex();
-            renderData.quadVertices[renderData.quadVertexIndex].position = convertVec4ToVec3(transformMatrix.transform(QuadModelData.vertexPositions[i]));
+            renderData.quadVertices[renderData.quadVertexIndex].position = convertVec4ToVec3(
+                    transformMatrix.transform(QuadModelData.vertexPositions[i]));
             renderData.quadVertices[renderData.quadVertexIndex].color = color;
             renderData.quadVertices[renderData.quadVertexIndex].texCoord = QuadModelData.textureCoordinates[i];
             renderData.quadVertices[renderData.quadVertexIndex].texIndex = textureIndex;
@@ -97,7 +98,8 @@ public class Renderer {
         endScene();
         reset();
     }
-    public static  void endScene() {
+
+    public static void endScene() {
         var buffer = FloatBuffer.allocate(RenderData.MAX_VERTICES * QuadVertex.getSize());
         for (int i = 0; i < renderData.quadVertices.length; i++) {
             if (renderData.quadVertices[i] != null) {
@@ -122,5 +124,6 @@ public class Renderer {
         renderData.quadVertexBuffer.destroy();
     }
 
-    public static void onWindowResize(int width, int height) {}
+    public static void onWindowResize(int width, int height) {
+    }
 }

@@ -29,7 +29,7 @@ public class SandboxLayer extends Layer {
         RenderCommand.clear();
 
         Renderer.beginScene();
-        Renderer.drawQuad(new Vector2f(0,0), new Vector2f(1, 1), new Vector4f(1,1,1,1));
+        Renderer.drawQuad(new Vector2f(0, 0), new Vector2f(1, 1), new Vector4f(1, 1, 1, 1));
         Renderer.endScene();
     }
 
