@@ -1,6 +1,8 @@
 package jazel.engine.renderer.renderer;
 
 import jazel.engine.core.Core;
+import jazel.engine.renderer.container.VertexArray;
+import jazel.engine.renderer.container.VertexBuffer;
 import org.joml.Vector4f;
 
 public abstract class RenderCommand {
@@ -27,6 +29,7 @@ public abstract class RenderCommand {
         rendererAPI.clear();
     }
 
-    public static void drawIndexed() {
+    public static void drawIndexed(VertexArray vertexArray, int indexCount) {
+        rendererAPI.drawIndexed(vertexArray, indexCount);
     }
 }

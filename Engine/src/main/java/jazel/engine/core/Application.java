@@ -33,9 +33,10 @@ public class Application {
     private boolean minimized;
 
     public Application() {
+        Core.checkEnvironment();
+
         Core.assertion(instance != null, "Application already exists");
 
-        Core.checkEnvironment();
 
         instance = this;
         layerStack = new LayerStack();
@@ -74,6 +75,7 @@ public class Application {
         }
 
         window.shutdown();
+        Renderer.shutdown();
     }
 
     public void onEvent(Event event) {

@@ -8,6 +8,10 @@ public final class RenderData {
     public static final int MAX_VERTICES = MAX_QUADS * 4;
     public static final int MAX_INDICES = MAX_QUADS * 6;
 
-    public static VertexArray vertexArray;
-    public static VertexBuffer vertexBuffer;
+    public VertexArray quadVertexArray;
+    public VertexBuffer quadVertexBuffer;
+
+    public QuadVertex[] quadVertices;
+    public int quadVertexIndex;
+    public int quadIndexCount;
 }

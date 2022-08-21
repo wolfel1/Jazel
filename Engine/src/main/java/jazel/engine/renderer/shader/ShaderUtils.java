@@ -1,9 +1,10 @@
 package jazel.engine.renderer.shader;
 
 import jazel.engine.core.Core;
+import jazel.engine.core.Log;
 import jazel.engine.renderer.shader.enumeration.ShaderDataType;
 
-public final class ShaderUtils {
+public class ShaderUtils {
   public static int shaderDataTypeSize(ShaderDataType type) {
     switch (type) {
       case FLOAT:
@@ -23,7 +24,7 @@ public final class ShaderUtils {
       case BOOL:     return 1;
     }
 
-    Core.assertion(false,"Unknown ShaderDataType!");
+    Log.getCoreLogger().error("Unknown ShaderDataType!");
     return 0;
   }
 }

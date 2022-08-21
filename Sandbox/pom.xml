@@ -19,10 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jazel</groupId>
+            <groupId>jazel</groupId>
             <artifactId>Engine</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

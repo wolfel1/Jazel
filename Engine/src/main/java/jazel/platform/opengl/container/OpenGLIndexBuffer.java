@@ -22,7 +22,6 @@ public class OpenGLIndexBuffer extends IndexBuffer {
   @Override
   public void bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID);
-
   }
 
   @Override

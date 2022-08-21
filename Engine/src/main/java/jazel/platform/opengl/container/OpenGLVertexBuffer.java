@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL45.glCreateBuffers;
 
 import jazel.engine.renderer.container.VertexBuffer;
 
+import java.nio.FloatBuffer;
+
 public class OpenGLVertexBuffer extends VertexBuffer {
 
   public OpenGLVertexBuffer(long size) {
@@ -18,7 +20,6 @@ public class OpenGLVertexBuffer extends VertexBuffer {
 
     rendererID = glCreateBuffers();
     glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-    glBufferData(GL_ARRAY_BUFFER, size, GL_DYNAMIC_DRAW);
   }
 
   public OpenGLVertexBuffer(float[] vertices) {
@@ -40,9 +41,9 @@ public class OpenGLVertexBuffer extends VertexBuffer {
   }
 
   @Override
-  public void setData(float[] data) {
+  public void setData(FloatBuffer data) {
     glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, data);
+    glBufferData(GL_ARRAY_BUFFER, data.array(), GL_DYNAMIC_DRAW);
   }
 
   @Override

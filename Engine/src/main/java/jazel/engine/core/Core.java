@@ -15,7 +15,7 @@ public class Core {
     }
 
     public static void assertion(boolean assertion, String message) {
-        if (isDebug && assertion) {
+        if (assertion && isDebug) {
             Log.getCoreLogger().error(message);
             throw new RuntimeException();
         }

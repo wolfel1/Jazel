@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
 public class BufferElement {
 
   private String name;
   private ShaderDataType shaderDataType;
-  @Getter private int size;
-  @Setter private int  offset;
+  private int size;
+  @Setter private int offset;
   private boolean normalized;
 
   public BufferElement(String name, ShaderDataType shaderDataType, boolean normalized) {

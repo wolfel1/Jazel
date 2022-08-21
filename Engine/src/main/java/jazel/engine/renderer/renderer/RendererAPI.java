@@ -1,6 +1,7 @@
 package jazel.engine.renderer.renderer;
 
 import jazel.engine.core.Log;
+import jazel.engine.renderer.container.VertexArray;
 import jazel.engine.renderer.enumeration.API;
 import org.joml.Vector4f;
 import jazel.platform.opengl.OpenGLRendererAPI;
@@ -13,7 +14,7 @@ public abstract class RendererAPI {
     public abstract void setViewport(int x, int y, int width, int height);
     public abstract void setClearColor(Vector4f color);
     public abstract void clear();
-    public abstract void drawIndexed();
+    public abstract void drawIndexed(VertexArray vertexArray, int vertexBuffer);
 
     public static API getAPI() {
         return api;
