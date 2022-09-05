@@ -83,7 +83,6 @@ public class Application {
             KeyReleasedEvent e = (KeyReleasedEvent) event;
             if (e.getKeyCode() == KeyCode.ESCAPE) {
                 EventRegistry.register(new WindowCloseEvent());
-                event.setHandled(true);
             }
         }
         var iterator = layerStack.getLayers().descendingIterator();

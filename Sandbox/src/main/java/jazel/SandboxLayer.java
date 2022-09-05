@@ -4,6 +4,7 @@ import imgui.ImGui;
 import jazel.engine.core.layer.Layer;
 import jazel.engine.primitives.Quad;
 import jazel.engine.events.Event;
+import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
 import org.joml.Vector2f;
@@ -11,10 +12,12 @@ import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
 
-
+    private OrthographicCameraController cameraController;
     private Quad firstQuad;
     public SandboxLayer() {
         super("jazel.Sandbox");
+        cameraController = new OrthographicCameraController(1920.0f / 1080.0f, true, false);
+
     }
 
     @Override
@@ -32,7 +35,9 @@ public class SandboxLayer extends Layer {
         RenderCommand.setClearColor(new Vector4f(0.2f, 0.2f, 0.2f, 1.0f));
         RenderCommand.clear();
 
-        Renderer.beginScene();
+        cameraController.onUpdate();
+
+        Renderer.beginScene(cameraController.getCamera());
         Renderer.drawQuad(new Vector2f(firstQuad.pos), new Vector2f(firstQuad.size), new Vector4f(firstQuad.color));
         Renderer.endScene();
     }

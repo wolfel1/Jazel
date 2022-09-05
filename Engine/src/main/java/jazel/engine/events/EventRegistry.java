@@ -22,6 +22,7 @@ public class EventRegistry {
         for (Event event : eventRegister) {
             if (!event.isHandled()) {
                 dispatcher.dispatch(event);
+                event.setHandled(true);
             }
             unregister(event);
         }

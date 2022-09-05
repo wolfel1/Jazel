@@ -3,6 +3,7 @@ package jazel.engine.renderer.renderer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import jazel.engine.renderer.camera.OrthographicCamera;
 import jazel.engine.renderer.container.*;
 import jazel.engine.renderer.renderer.datastructure.QuadModelData;
 import jazel.engine.renderer.renderer.datastructure.QuadVertex;
@@ -59,8 +60,9 @@ public class Renderer {
         renderData.globalShader = Shader.create("Global");
     }
 
-    public static void beginScene() {
+    public static void beginScene(OrthographicCamera camera) {
         renderData.globalShader.bind();
+        renderData.globalShader.setMat4("uViewProjection", camera.getViewProjectionMatrix());
         reset();
     }
 
@@ -130,5 +132,6 @@ public class Renderer {
     }
 
     public static void onWindowResize(int width, int height) {
+        RenderCommand.setViewport(0,0, width, height);
     }
 }

@@ -178,7 +178,7 @@ public class OpenGLShader extends Shader {
     @Override
     public void setMat4(String name, Matrix4f value) {
         var location = glGetUniformLocation(rendererID, name);
-        glUniformMatrix4fv(location, false, value.get(new float[4]));
+        glUniformMatrix4fv(location, false, value.get(new float[4*4]));
     }
 
     @Override
