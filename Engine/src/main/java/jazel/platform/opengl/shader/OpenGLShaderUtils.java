@@ -2,7 +2,7 @@ package jazel.platform.opengl.shader;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_INT;
-import static org.lwjgl.opengl.GL20C.GL_BOOL;
+import static org.lwjgl.opengl.GL20.*;
 
 import jazel.engine.core.Log;
 import jazel.engine.renderer.shader.ShaderUtils;
@@ -28,6 +28,18 @@ public class OpenGLShaderUtils extends ShaderUtils {
         }
 
         Log.getCoreLogger().error("Unknown ShaderDataType!");
+        return 0;
+    }
+
+    public static int getShaderTypeFromString(String type) {
+        if (type.equals("vertex") || type.equals("vert")) {
+            return GL_VERTEX_SHADER;
+        }
+        if (type.equals("fragment") || type.equals("frag")) {
+            return GL_FRAGMENT_SHADER;
+        }
+
+        Log.getCoreLogger().error("Unknown shader type!");
         return 0;
     }
 }

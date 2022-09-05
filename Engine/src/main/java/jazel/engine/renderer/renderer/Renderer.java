@@ -7,6 +7,7 @@ import jazel.engine.renderer.container.*;
 import jazel.engine.renderer.renderer.datastructure.QuadModelData;
 import jazel.engine.renderer.renderer.datastructure.QuadVertex;
 import jazel.engine.renderer.renderer.datastructure.RenderData;
+import jazel.engine.renderer.shader.Shader;
 import jazel.engine.renderer.shader.enumeration.ShaderDataType;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -28,7 +29,7 @@ public class Renderer {
 
         var bufferElements = new ArrayList<BufferElement>();
         bufferElements.add(new BufferElement("aPosition", ShaderDataType.FLOAT3, false));
-        // bufferElements.add(new BufferElement("aColor", ShaderDataType.FLOAT4, false));
+        bufferElements.add(new BufferElement("aColor", ShaderDataType.FLOAT4, false));
         // bufferElements.add(new BufferElement("aTexCoord", ShaderDataType.FLOAT2, false));
         // bufferElements.add(new BufferElement("aTexIndex", ShaderDataType.FLOAT, false));
         // bufferElements.add(new BufferElement("aTilingFactor", ShaderDataType.FLOAT, false));
@@ -54,9 +55,12 @@ public class Renderer {
 
         var quadIndexBuffer = IndexBuffer.create(quadIndices, RenderData.MAX_INDICES);
         renderData.quadVertexArray.setIndexBuffer(quadIndexBuffer);
+
+        renderData.globalShader = Shader.create("Global");
     }
 
     public static void beginScene() {
+        renderData.globalShader.bind();
         reset();
     }
 
@@ -122,6 +126,7 @@ public class Renderer {
 
     public static void shutdown() {
         renderData.quadVertexBuffer.destroy();
+        renderData.globalShader.destroy();
     }
 
     public static void onWindowResize(int width, int height) {

@@ -2,6 +2,7 @@ package jazel.engine.renderer.renderer.datastructure;
 
 import jazel.engine.renderer.container.VertexArray;
 import jazel.engine.renderer.container.VertexBuffer;
+import jazel.engine.renderer.shader.Shader;
 
 public final class RenderData {
     public static final int MAX_QUADS = 10000;
@@ -14,4 +15,6 @@ public final class RenderData {
     public QuadVertex[] quadVertices;
     public int quadVertexIndex;
     public int quadIndexCount;
+
+    public Shader globalShader;
 }
