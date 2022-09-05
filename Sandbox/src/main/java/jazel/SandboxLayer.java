@@ -1,6 +1,8 @@
 package jazel;
 
+import imgui.ImGui;
 import jazel.engine.core.layer.Layer;
+import jazel.engine.primitives.Quad;
 import jazel.engine.events.Event;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
@@ -9,13 +11,15 @@ import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
 
+
+    private Quad firstQuad;
     public SandboxLayer() {
         super("jazel.Sandbox");
     }
 
     @Override
     public void onAttach() {
-
+        firstQuad = new Quad();
     }
 
     @Override
@@ -29,7 +33,7 @@ public class SandboxLayer extends Layer {
         RenderCommand.clear();
 
         Renderer.beginScene();
-        Renderer.drawQuad(new Vector2f(0, 0), new Vector2f(1, 1), new Vector4f(1, 0, 1, 0.5f));
+        Renderer.drawQuad(new Vector2f(firstQuad.pos), new Vector2f(firstQuad.size), new Vector4f(firstQuad.color));
         Renderer.endScene();
     }
 
@@ -40,6 +44,10 @@ public class SandboxLayer extends Layer {
 
     @Override
     public void onGuiRender() {
+        ImGui.begin("Quad Data");
 
+        ImGui.colorEdit4("Color", firstQuad.color);
+
+        ImGui.end();
     }
 }
