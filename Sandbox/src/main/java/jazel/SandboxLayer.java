@@ -8,6 +8,7 @@ import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
@@ -38,7 +39,8 @@ public class SandboxLayer extends Layer {
         cameraController.onUpdate();
 
         Renderer.beginScene(cameraController.getCamera());
-        Renderer.drawQuad(new Vector2f(firstQuad.pos), new Vector2f(firstQuad.size), new Vector4f(firstQuad.color));
+        Renderer.drawQuad(firstQuad);
+        Renderer.drawQuad(new Vector3f(1.0f, 0.0f, -0.1f), new Vector2f(1.0f,0.5f), new Vector4f(0.0f,0.4f,1.0f,1.0f));
         Renderer.endScene();
     }
 
@@ -51,7 +53,9 @@ public class SandboxLayer extends Layer {
     public void onGuiRender() {
         ImGui.begin("Quad Data");
 
-        ImGui.colorEdit4("Color", firstQuad.color);
+        ImGui.dragFloat2("Position", firstQuad.getPos(), 0.1f, -2.0f, 2.0f);
+        ImGui.dragFloat2("Size", firstQuad.getSize(), 0.1f, -2.0f, 2.0f);
+        ImGui.colorEdit4("Color", firstQuad.getColor());
 
         ImGui.end();
     }

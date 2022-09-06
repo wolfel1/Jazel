@@ -3,6 +3,7 @@ package jazel.engine.renderer.renderer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import jazel.engine.primitives.Quad;
 import jazel.engine.renderer.camera.OrthographicCamera;
 import jazel.engine.renderer.container.*;
 import jazel.engine.renderer.renderer.datastructure.QuadModelData;
@@ -71,6 +72,10 @@ public class Renderer {
         renderData.quadVertexIndex = 0;
     }
 
+    public static void drawQuad(Quad quad) {
+        drawQuad(quad.getPosVector(), quad.getSizeVector(), quad.getColorVector());
+    }
+
     public static void drawQuad(Vector2f position, Vector2f size, Vector4f color) {
         drawQuad(new Vector3f(position, 0), size, color);
     }
@@ -89,7 +94,7 @@ public class Renderer {
         for (var i = 0; i < 4; i++) {
             renderData.quadVertices[renderData.quadVertexIndex] = new QuadVertex();
             renderData.quadVertices[renderData.quadVertexIndex].position = convertVec4ToVec3(
-                    transformMatrix.transform(QuadModelData.vertexPositions[i]));
+                    transformMatrix.transform(QuadModelData.vertexPositions[i], new Vector4f()));
             renderData.quadVertices[renderData.quadVertexIndex].color = color;
             renderData.quadVertices[renderData.quadVertexIndex].texCoord = QuadModelData.textureCoordinates[i];
             renderData.quadVertices[renderData.quadVertexIndex].texIndex = textureIndex;
