@@ -40,7 +40,7 @@ public class SandboxLayer extends Layer {
 
         Renderer.beginScene(cameraController.getCamera());
         Renderer.drawQuad(firstQuad);
-        Renderer.drawQuad(new Vector3f(1.0f, 0.0f, -0.1f), new Vector2f(1.0f,0.5f), new Vector4f(0.0f,0.4f,1.0f,1.0f));
+        Renderer.drawRotatedQuad(firstQuad, 45.0f);
         Renderer.endScene();
     }
 

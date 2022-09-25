@@ -11,6 +11,7 @@ import jazel.engine.renderer.renderer.datastructure.QuadVertex;
 import jazel.engine.renderer.renderer.datastructure.RenderData;
 import jazel.engine.renderer.shader.Shader;
 import jazel.engine.renderer.shader.enumeration.ShaderDataType;
+import org.joml.Math;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -86,6 +87,26 @@ public class Renderer {
         }
 
         var transform = new Matrix4f().translate(position).scale(new Vector3f(size, 0));
+
+        draw(transform, color, 0, 0);
+    }
+
+    public static void drawRotatedQuad(Quad quad, float degrees) {
+        drawRotatedQuad(quad.getPosVector(), quad.getSizeVector(), quad.getColorVector(), degrees);
+    }
+
+    public static void drawRotatedQuad(Vector2f position, Vector2f size, Vector4f color, float degrees) {
+        drawRotatedQuad(new Vector3f(position, 0), size, color, degrees);
+    }
+
+    public static void drawRotatedQuad(Vector3f position, Vector2f size, Vector4f color, float degrees) {
+        if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
+            flushAndReset();
+        }
+
+        var transform = new Matrix4f().translate(position)
+                .rotateZ(Math.toRadians(degrees))
+                .scale(new Vector3f(size, 0));
 
         draw(transform, color, 0, 0);
     }
