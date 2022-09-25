@@ -17,7 +17,7 @@ public class SandboxLayer extends Layer {
     private Quad firstQuad;
     public SandboxLayer() {
         super("jazel.Sandbox");
-        cameraController = new OrthographicCameraController(1920.0f / 1080.0f, true, false);
+        cameraController = new OrthographicCameraController(1920.0f / 1080.0f, true, true);
 
     }
 
@@ -32,11 +32,11 @@ public class SandboxLayer extends Layer {
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate(float deltaTime) {
         RenderCommand.setClearColor(new Vector4f(0.2f, 0.2f, 0.2f, 1.0f));
         RenderCommand.clear();
 
-        cameraController.onUpdate();
+        cameraController.onUpdate(deltaTime);
 
         Renderer.beginScene(cameraController.getCamera());
         Renderer.drawQuad(firstQuad);

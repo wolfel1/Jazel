@@ -31,6 +31,7 @@ public class Application {
 
     private boolean running;
     private boolean minimized;
+    private float lastFrameTime = 0.0f;
 
     public Application() {
         Core.checkEnvironment();
@@ -55,10 +56,12 @@ public class Application {
     public void run() {
         while (running) {
             float time = (float) glfwGetTime();
+            float deltaTime = time - lastFrameTime;
+            lastFrameTime = time;
 
             if (!minimized) {
                 for (Layer layer : layerStack.getLayers()) {
-                    layer.onUpdate();
+                    layer.onUpdate(deltaTime);
                 }
             }
 

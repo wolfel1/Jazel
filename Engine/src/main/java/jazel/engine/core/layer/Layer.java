@@ -14,7 +14,7 @@ public abstract class Layer {
 
     public abstract void onDetach();
 
-    public abstract void onUpdate();
+    public abstract void onUpdate(float deltaTime);
 
     public abstract void onEvent(Event event);
 
