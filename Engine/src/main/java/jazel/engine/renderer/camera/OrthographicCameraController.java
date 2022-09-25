@@ -27,7 +27,7 @@ public class OrthographicCameraController {
     @Setter @Getter private OrthographicCamera camera;
 
     @Setter @Getter
-    private float cameraTranslationSpeed = 0.1f, cameraRotationSpeed = 180.0f;
+    private float cameraTranslationSpeed = 5.0f, cameraRotationSpeed = 180.0f;
     public OrthographicCameraController(float aspectRatio, boolean allowZoom, boolean allowRotation) {
         zoomAllowed = allowZoom;
         rotationAllowed = allowRotation;
@@ -67,6 +67,7 @@ public class OrthographicCameraController {
             }
             camera.addRotation(rotation);
         }
+        cameraTranslationSpeed = zoomLevel;
     }
 
     @EventHandler(type = EventType.MOUSE_SCROLLED)
