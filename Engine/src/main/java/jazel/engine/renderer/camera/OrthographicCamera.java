@@ -27,7 +27,7 @@ public class OrthographicCamera {
     }
 
     public void addPosition(Vector3f deltaPosition) {
-        this.position.add(deltaPosition);
+        this.position.add(deltaPosition.mul(-1));
         recalculateViewMatrix();
     }
 

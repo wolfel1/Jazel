@@ -1,20 +1,23 @@
 package jazel;
 
 import imgui.ImGui;
+import imgui.type.ImString;
+import jazel.engine.core.Log;
 import jazel.engine.core.layer.Layer;
 import jazel.engine.primitives.Quad;
 import jazel.engine.events.Event;
 import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
 
     private OrthographicCameraController cameraController;
     private Quad firstQuad;
+
+    private ImString outputName = new ImString();
+
     public SandboxLayer() {
         super("jazel.Sandbox");
         cameraController = new OrthographicCameraController(1920.0f / 1080.0f, true, true);
@@ -56,6 +59,11 @@ public class SandboxLayer extends Layer {
         ImGui.dragFloat2("Position", firstQuad.getPos(), 0.1f, -2.0f, 2.0f);
         ImGui.dragFloat2("Size", firstQuad.getSize(), 0.1f, -2.0f, 2.0f);
         ImGui.colorEdit4("Color", firstQuad.getColor());
+        ImGui.newLine();
+        ImGui.inputText("Image name", outputName);
+        if (ImGui.button("Render")) {
+            RenderCommand.renderImage(outputName.get());
+        }
 
         ImGui.end();
     }

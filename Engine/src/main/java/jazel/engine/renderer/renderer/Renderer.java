@@ -1,8 +1,14 @@
 package jazel.engine.renderer.renderer;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import jazel.engine.core.Log;
 import jazel.engine.primitives.Quad;
 import jazel.engine.renderer.camera.OrthographicCamera;
 import jazel.engine.renderer.container.*;
@@ -17,7 +23,10 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import javax.imageio.ImageIO;
+
 import static jazel.engine.renderer.utils.VectorUtils.convertVec4ToVec3;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Renderer {
 
@@ -61,6 +70,8 @@ public class Renderer {
 
         renderData.globalShader = Shader.create("Global");
     }
+
+
 
     public static void beginScene(OrthographicCamera camera) {
         renderData.globalShader.bind();

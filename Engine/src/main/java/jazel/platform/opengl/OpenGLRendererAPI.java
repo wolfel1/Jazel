@@ -12,11 +12,13 @@ import static org.lwjgl.opengl.GL43.glDebugMessageControl;
 import static org.lwjgl.opengl.GLDebugMessageCallback.getMessage;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import jazel.engine.core.Log;
 import jazel.engine.renderer.container.VertexArray;
 import jazel.engine.renderer.renderer.RendererAPI;
 import org.joml.Vector4f;
+import org.joml.Vector4i;
 
 public class OpenGLRendererAPI extends RendererAPI {
 
@@ -49,6 +51,13 @@ public class OpenGLRendererAPI extends RendererAPI {
     }
 
     @Override
+    public Vector4i getViewport() {
+        int[] viewport = new int[4];
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        return new Vector4i(viewport);
+    }
+
+    @Override
     public void setClearColor(Vector4f color) {
         glClearColor(color.x, color.y, color.z, color.w);
     }
@@ -62,4 +71,12 @@ public class OpenGLRendererAPI extends RendererAPI {
     public void drawIndexed(VertexArray vertexArray, int indexCount) {
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
     }
+
+    @Override
+    protected void readPixels(ByteBuffer buffer, int width, int height) {
+        glReadBuffer(GL_BACK);
+        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+    }
+
+
 }

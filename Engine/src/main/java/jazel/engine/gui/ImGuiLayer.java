@@ -10,6 +10,7 @@ import jazel.engine.core.Application;
 import jazel.engine.core.layer.Layer;
 import jazel.engine.events.Event;
 import jazel.engine.events.enumeration.EventCategory;
+import jazel.engine.renderer.camera.OrthographicCameraController;
 import org.lwjgl.glfw.GLFW;
 
 public class ImGuiLayer extends Layer {
@@ -52,12 +53,17 @@ public class ImGuiLayer extends Layer {
 
     @Override
     public void onUpdate(float deltaTime) {
+        if (ImGui.isAnyItemActive()) {
+            OrthographicCameraController.setAllowMove(false);
+        } else {
+            OrthographicCameraController.setAllowMove(true);
+
+        }
     }
 
     @Override
     public void onEvent(Event event) {
         var io = ImGui.getIO();
-
         event.setHandled(event.isInCategory(EventCategory.MOUSE) && io.getWantCaptureMouse());
         event.setHandled(event.isInCategory(EventCategory.KEYBOARD) && io.getWantCaptureKeyboard());
     }

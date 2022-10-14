@@ -26,6 +26,8 @@ public class OrthographicCameraController {
 
     @Setter @Getter private OrthographicCamera camera;
 
+    @Setter private static boolean allowMove = true;
+
     @Setter @Getter
     private float cameraTranslationSpeed = 5.0f, cameraRotationSpeed = 180.0f;
     public OrthographicCameraController(float aspectRatio, boolean allowZoom, boolean allowRotation) {
@@ -40,7 +42,8 @@ public class OrthographicCameraController {
 
     public void onUpdate(float deltaTime) {
 
-        var deltaPosition = new Vector3f();
+        if(allowMove) {
+            var deltaPosition = new Vector3f();
             if (Input.isKeyPressed(KeyCode.A)) {
                 deltaPosition.x -= Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
                 deltaPosition.y -= Math.sin(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
@@ -58,14 +61,16 @@ public class OrthographicCameraController {
             }
             camera.addPosition(deltaPosition);
 
-        if (rotationAllowed) {
-            var rotation = 0.0f;
-            if (Input.isKeyPressed(KeyCode.Q)) {
-                rotation -= cameraRotationSpeed * deltaTime;
-            } else if (Input.isKeyPressed(KeyCode.E)) {
-                rotation += cameraRotationSpeed * deltaTime;
+
+            if (rotationAllowed) {
+                var rotation = 0.0f;
+                if (Input.isKeyPressed(KeyCode.Q)) {
+                    rotation -= cameraRotationSpeed * deltaTime;
+                } else if (Input.isKeyPressed(KeyCode.E)) {
+                    rotation += cameraRotationSpeed * deltaTime;
+                }
+                camera.addRotation(rotation);
             }
-            camera.addRotation(rotation);
         }
         cameraTranslationSpeed = zoomLevel;
     }

@@ -2,6 +2,7 @@ package jazel.platform.opengl.shader;
 
 import jazel.engine.core.Core;
 import jazel.engine.core.Log;
+import jazel.engine.renderer.renderer.Utils;
 import jazel.engine.renderer.shader.Shader;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -40,7 +41,7 @@ public class OpenGLShader extends Shader {
     }
 
     private Map<Integer, String> readFiles(String folder) throws IOException {
-        String dir = getPath(folder);
+        String dir = Utils.getPath(folder);
         Set<String> paths = Stream.of(Objects.requireNonNull(new File(dir).listFiles()))
                 .filter(file -> !file.isDirectory())
                 .map(File::getName)
@@ -55,11 +56,7 @@ public class OpenGLShader extends Shader {
         return shaderSources;
     }
 
-    private static String getPath(String folder) {
-        var current = Thread.currentThread().getContextClassLoader().getResource(folder);
-        assert current != null;
-        return current.getPath();
-    }
+
 
     private String readFile(String fileName) {
         var file = new File(fileName);

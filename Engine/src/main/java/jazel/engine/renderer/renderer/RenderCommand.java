@@ -32,4 +32,8 @@ public abstract class RenderCommand {
     public static void drawIndexed(VertexArray vertexArray, int indexCount) {
         rendererAPI.drawIndexed(vertexArray, indexCount);
     }
+
+    public static void renderImage(String name) {
+        rendererAPI.renderImage(name);
+    }
 }
