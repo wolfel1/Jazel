@@ -22,10 +22,10 @@ public final class QuadVertex {
                  color.x,
                  color.y,
                  color.z,
-                 color.w
-                // texCoord.x,
-                // texCoord.y,
-                // texIndex,
+                 color.w,
+                texCoord.x,
+                texCoord.y,
+                texIndex
                 // tilingFactor
         };
     }
