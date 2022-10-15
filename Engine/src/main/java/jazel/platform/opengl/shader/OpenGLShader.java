@@ -2,7 +2,7 @@ package jazel.platform.opengl.shader;
 
 import jazel.engine.core.Core;
 import jazel.engine.core.Log;
-import jazel.engine.renderer.renderer.Utils;
+import jazel.engine.renderer.utils.Utils;
 import jazel.engine.renderer.shader.Shader;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

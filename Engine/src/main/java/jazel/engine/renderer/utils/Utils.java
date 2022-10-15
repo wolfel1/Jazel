@@ -1,4 +1,4 @@
-package jazel.engine.renderer.renderer;
+package jazel.engine.renderer.utils;
 
 import jazel.engine.core.Core;
 import jazel.engine.core.Log;

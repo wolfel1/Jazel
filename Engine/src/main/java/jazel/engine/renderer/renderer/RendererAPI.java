@@ -3,8 +3,7 @@ package jazel.engine.renderer.renderer;
 import jazel.engine.core.Log;
 import jazel.engine.renderer.container.VertexArray;
 import jazel.engine.renderer.enumeration.API;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
+import jazel.engine.renderer.utils.Utils;
 import org.joml.Vector4f;
 import jazel.platform.opengl.OpenGLRendererAPI;
 import org.joml.Vector4i;
@@ -15,8 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public abstract class RendererAPI {
 
