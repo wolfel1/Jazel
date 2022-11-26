@@ -19,18 +19,18 @@ public class SandboxLayer extends Layer {
     private Quad firstQuad;
     private Quad texturedQuad;
 
-    private ImString outputName = new ImString();
+    private final ImString outputName = new ImString();
 
     public SandboxLayer() {
         super("jazel.Sandbox");
         cameraController = new OrthographicCameraController(1920.0f / 1080.0f, true, true);
-
     }
 
     @Override
     public void onAttach() {
         firstQuad = new Quad();
         firstQuad.setPos(new Vector2f(-1,0));
+        firstQuad.setColor(new Vector4f(0.5f, 0.2f,0.8f, 1));
 
         texturedQuad = new Quad();
         texturedQuad.setPos(new Vector2f(1,0));
@@ -39,7 +39,8 @@ public class SandboxLayer extends Layer {
 
     @Override
     public void onDetach() {
-
+        firstQuad.destroy();
+        texturedQuad.destroy();
     }
 
     @Override
@@ -50,8 +51,8 @@ public class SandboxLayer extends Layer {
         cameraController.onUpdate(deltaTime);
 
         Renderer.beginScene(cameraController.getCamera());
-        Renderer.drawQuad(firstQuad);
-        Renderer.drawQuad(texturedQuad);
+        Renderer.draw(firstQuad.getPosVector(), firstQuad.getSizeVector(), firstQuad.getColorVector());
+        Renderer.draw(texturedQuad.getPosVector(), texturedQuad.getSizeVector(), texturedQuad.getColorVector(), texturedQuad.getTexture());
         Renderer.endScene();
     }
 

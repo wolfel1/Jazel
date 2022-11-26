@@ -69,8 +69,13 @@ public class Renderer {
         assert renderData.globalShader != null;
         renderData.globalShader.bind();
         renderData.globalShader.setIntArray("uTextures", samplers);
+        renderData.whiteTexture = Texture2D.create(1,1);
+        assert renderData.whiteTexture != null;
+        int[] textureData = new int[]{ 0xffffffff };
+        renderData.whiteTexture.setData(textureData);
 
         renderData.textureSlots = new Texture2D[RenderData.MAX_TEXTURE_SLOTS];
+        renderData.textureSlots[0] = renderData.whiteTexture;
     }
 
 
@@ -85,14 +90,20 @@ public class Renderer {
         renderData.quadIndexCount = 0;
         renderData.quadVertexIndex = 0;
 
-        renderData.textureSlotIndex = 0;
+        renderData.textureSlotIndex = 1;
     }
 
-    public static void drawQuad(Quad quad) {
-        drawQuad(quad.getPosVector(), quad.getSizeVector(), quad.getColorVector(), quad.getTexture());
-    }
+    public static void draw(Vector3f position, Vector2f size, Vector4f color) {
+        if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
+            flushAndReset();
+        }
 
-    public static void drawQuad(Vector3f position, Vector2f size, Vector4f color, Texture2D texture) {
+
+        var transform = new Matrix4f().translate(position).scale(new Vector3f(size, 0));
+
+        draw(transform, color, 0);
+    }
+    public static void draw(Vector3f position, Vector2f size, Vector4f color, Texture2D texture) {
         if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
             flushAndReset();
         }
@@ -104,26 +115,21 @@ public class Renderer {
         draw(transform, color, textureIndex);
     }
 
-    public static void drawRotatedQuad(Quad quad, float degrees) {
-        drawRotatedQuad(quad.getPosVector(), quad.getSizeVector(), quad.getColorVector(), quad.getTexture(), degrees);
-    }
-
-    public static void drawRotatedQuad(Vector3f position, Vector2f size, Vector4f color, Texture2D texture, float degrees) {
+    public static void drawRotated(Vector3f position, Vector2f size, Vector4f color, float degrees) {
         if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
             flushAndReset();
         }
 
-        int textureIndex = searchTextureSlots(texture);
 
         var transform = new Matrix4f().translate(position)
                 .rotateZ(Math.toRadians(degrees))
                 .scale(new Vector3f(size, 0));
 
-        draw(transform, color, textureIndex);
+        draw(transform, color, 0);
     }
     private static int searchTextureSlots(Texture2D texture) {
         int index = -1;
-        for (int i = 0; i < renderData.textureSlotIndex; i++) {
+        for (int i = 1; i < renderData.textureSlotIndex; i++) {
             if (renderData.textureSlots[i] != null && renderData.textureSlots[i].equals(texture)) {
                 index = i;
                 break;
@@ -187,6 +193,7 @@ public class Renderer {
     public static void shutdown() {
         renderData.quadVertexBuffer.destroy();
         renderData.globalShader.destroy();
+        renderData.whiteTexture.destroy();
     }
 
     public static void onWindowResize(int width, int height) {

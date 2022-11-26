@@ -11,27 +11,13 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 @Getter
+@NoArgsConstructor
 public final class Quad {
 
-    private static Texture2D WHITE_TEXTURE;
     private float[] pos = new float[]{0, 0, 0};
     private float[] size = new float[]{1, 1};
     private float[] color = new float[]{1, 1, 1, 1.0f};
     @Setter private Texture2D texture;
-
-    public Quad() {
-        if(WHITE_TEXTURE == null) {
-            setDefaultTexture();
-        }
-        texture = WHITE_TEXTURE;
-    }
-
-    private void setDefaultTexture() {
-        WHITE_TEXTURE = Texture2D.create(1,1);
-        assert WHITE_TEXTURE != null;
-        int[] textureData = new int[]{ 0xffffffff };
-        WHITE_TEXTURE.setData(textureData);
-    }
 
     public Vector3f getPosVector() {
         return new Vector3f(pos);
@@ -67,5 +53,11 @@ public final class Quad {
         this.color[1] = color.y;
         this.color[2] = color.z;
         this.color[3] = color.w;
+    }
+
+    public void destroy() {
+        if(texture != null) {
+            texture.destroy();
+        }
     }
 }

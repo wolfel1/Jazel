@@ -23,5 +23,6 @@ public final class RenderData {
     public Shader globalShader;
 
     public Texture2D[] textureSlots;
-    public int textureSlotIndex = 0;
+    public Texture2D whiteTexture;
+    public int textureSlotIndex = 1;
 }
