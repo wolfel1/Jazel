@@ -2,14 +2,14 @@ package jazel;
 
 import imgui.ImGui;
 import imgui.type.ImString;
-import jazel.engine.core.Log;
 import jazel.engine.core.layer.Layer;
 import jazel.engine.primitives.Quad;
 import jazel.engine.events.Event;
 import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
-import jazel.engine.renderer.texture.Texture2D;
+import jazel.engine.renderer.texture.SubTexture;
+import jazel.engine.renderer.texture.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -18,6 +18,10 @@ public class SandboxLayer extends Layer {
     private OrthographicCameraController cameraController;
     private Quad firstQuad;
     private Quad texturedQuad;
+
+    private Texture spritesheet;
+    private Quad spritesheetQuad;
+    private SubTexture front;
 
     private final ImString outputName = new ImString();
 
@@ -34,13 +38,19 @@ public class SandboxLayer extends Layer {
 
         texturedQuad = new Quad();
         texturedQuad.setPos(new Vector2f(1,0));
-        texturedQuad.setTexture(Texture2D.create("Checkerboard.png"));
+        texturedQuad.setTexture(Texture.create("Checkerboard.png"));
+
+        spritesheet = Texture.create("spritesheet.png");
+        spritesheetQuad = new Quad();
+        front = SubTexture.create(spritesheet, new Vector2f(0,0), new Vector2f(256,320));
     }
 
     @Override
     public void onDetach() {
         firstQuad.destroy();
         texturedQuad.destroy();
+        spritesheetQuad.destroy();
+        spritesheet.destroy();
     }
 
     @Override
@@ -53,6 +63,7 @@ public class SandboxLayer extends Layer {
         Renderer.beginScene(cameraController.getCamera());
         Renderer.draw(firstQuad.getPosVector(), firstQuad.getSizeVector(), firstQuad.getColorVector());
         Renderer.draw(texturedQuad.getPosVector(), texturedQuad.getSizeVector(), texturedQuad.getColorVector(), texturedQuad.getTexture());
+        Renderer.draw(spritesheetQuad.getPosVector(), spritesheetQuad.getSizeVector(), spritesheetQuad.getColorVector(), front);
         Renderer.endScene();
     }
 

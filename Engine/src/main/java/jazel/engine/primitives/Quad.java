@@ -1,8 +1,6 @@
 package jazel.engine.primitives;
 
 import jazel.engine.renderer.texture.Texture;
-import jazel.engine.renderer.texture.Texture2D;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +15,7 @@ public final class Quad {
     private float[] pos = new float[]{0, 0, 0};
     private float[] size = new float[]{1, 1};
     private float[] color = new float[]{1, 1, 1, 1.0f};
-    @Setter private Texture2D texture;
+    @Setter private Texture texture;
 
     public Vector3f getPosVector() {
         return new Vector3f(pos);

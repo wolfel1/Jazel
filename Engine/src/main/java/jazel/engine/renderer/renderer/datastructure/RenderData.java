@@ -3,9 +3,7 @@ package jazel.engine.renderer.renderer.datastructure;
 import jazel.engine.renderer.container.VertexArray;
 import jazel.engine.renderer.container.VertexBuffer;
 import jazel.engine.renderer.shader.Shader;
-import jazel.engine.renderer.texture.Texture2D;
-
-import java.util.List;
+import jazel.engine.renderer.texture.Texture;
 
 public final class RenderData {
     public static final int MAX_QUADS = 10000;
@@ -22,7 +20,7 @@ public final class RenderData {
 
     public Shader globalShader;
 
-    public Texture2D[] textureSlots;
-    public Texture2D whiteTexture;
+    public Texture[] textureSlots;
+    public Texture whiteTexture;
     public int textureSlotIndex = 1;
 }

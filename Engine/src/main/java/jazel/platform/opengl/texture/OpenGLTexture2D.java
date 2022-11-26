@@ -1,14 +1,14 @@
 package jazel.platform.opengl.texture;
 
 import jazel.engine.core.Core;
-import jazel.engine.renderer.texture.Texture2D;
+import jazel.engine.renderer.texture.Texture;
 import org.lwjgl.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL45.*;
 import static org.lwjgl.stb.STBImage.*;
 
-public class OpenGLTexture2D extends Texture2D {
+public class OpenGLTexture2D extends Texture {
 
     public OpenGLTexture2D(int width, int height) {
         super(width, height);
