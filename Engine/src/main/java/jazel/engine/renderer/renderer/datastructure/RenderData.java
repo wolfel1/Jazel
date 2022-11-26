@@ -21,8 +21,7 @@ public final class RenderData {
     public int quadIndexCount;
 
     public Shader globalShader;
-    public Texture2D whiteTexture;
 
     public Texture2D[] textureSlots;
-    public int textureSlotIndex = 1;
+    public int textureSlotIndex = 0;
 }

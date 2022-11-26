@@ -2,8 +2,7 @@ package jazel.platform.opengl.texture;
 
 import jazel.engine.core.Core;
 import jazel.engine.renderer.texture.Texture2D;
-
-import java.nio.IntBuffer;
+import org.lwjgl.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL45.*;
@@ -23,18 +22,17 @@ public class OpenGLTexture2D extends Texture2D {
         setTextureParameters();
     }
 
-
-
     public OpenGLTexture2D(String textureFile) {
         super(textureFile);
 
-        var width= IntBuffer.allocate(1);
-        var height= IntBuffer.allocate(1);
-        var channels = IntBuffer.allocate(1);
+        var width= BufferUtils.createIntBuffer(1);
+        var height= BufferUtils.createIntBuffer(1);
+        var channels = BufferUtils.createIntBuffer(1);
         stbi_set_flip_vertically_on_load(true);
 
-        var data = stbi_load(textureFile, width, height, channels, 0);
-        Core.assertion(data == null, "Failed to load image!");
+
+        var data = stbi_load(path, width, height, channels, 0);
+        Core.assertion(data == null, "Failed to load image! " + stbi_failure_reason());
         this.width = width.get();
         this.height = height.get();
 
@@ -56,7 +54,7 @@ public class OpenGLTexture2D extends Texture2D {
         setTextureParameters();
 
         assert data != null;
-        setData(data.asIntBuffer().array());
+        glTextureSubImage2D(rendererID, 0, 0, 0, this.width, this.height, dataFormat, GL_UNSIGNED_BYTE, data);
 
         stbi_image_free(data);
     }

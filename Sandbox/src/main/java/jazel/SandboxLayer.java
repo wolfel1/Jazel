@@ -9,12 +9,15 @@ import jazel.engine.events.Event;
 import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
+import jazel.engine.renderer.texture.Texture2D;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
 
     private OrthographicCameraController cameraController;
     private Quad firstQuad;
+    private Quad texturedQuad;
 
     private ImString outputName = new ImString();
 
@@ -27,6 +30,11 @@ public class SandboxLayer extends Layer {
     @Override
     public void onAttach() {
         firstQuad = new Quad();
+        firstQuad.setPos(new Vector2f(-1,0));
+
+        texturedQuad = new Quad();
+        texturedQuad.setPos(new Vector2f(1,0));
+        texturedQuad.setTexture(Texture2D.create("Checkerboard.png"));
     }
 
     @Override
@@ -43,7 +51,7 @@ public class SandboxLayer extends Layer {
 
         Renderer.beginScene(cameraController.getCamera());
         Renderer.drawQuad(firstQuad);
-        Renderer.drawRotatedQuad(firstQuad, 45.0f);
+        Renderer.drawQuad(texturedQuad);
         Renderer.endScene();
     }
 

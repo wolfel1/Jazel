@@ -3,6 +3,10 @@ package jazel.engine.renderer.texture;
 import jazel.engine.renderer.utils.Utils;
 import lombok.Getter;
 
+import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+
 public abstract class Texture {
 
     @Getter protected int width;
@@ -21,7 +25,7 @@ public abstract class Texture {
     }
 
     public Texture(String path) {
-        this.path = Utils.getPath("textures") + "/" + path;
+        this.path = Utils.getPath("assets/textures") + "/" + path;
     }
 
     public abstract void setData(int[] data);

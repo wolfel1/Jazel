@@ -1,5 +1,7 @@
 package jazel.engine.primitives;
 
+import jazel.engine.renderer.texture.Texture;
+import jazel.engine.renderer.texture.Texture2D;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +11,26 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 @Getter
-@NoArgsConstructor
 public final class Quad {
+
+    private static Texture2D WHITE_TEXTURE;
     private float[] pos = new float[]{0, 0, 0};
     private float[] size = new float[]{1, 1};
     private float[] color = new float[]{1, 1, 1, 1.0f};
+    @Setter private Texture2D texture;
 
-    public Quad(Vector2f pos, Vector2f size, Vector4f color) {
-        this.pos = new float[]{pos.x,pos.y, 0};
-        this.size = new float[]{size.x, size.y};
-        this.color = new float[]{color.x, color.y, color.z, color.w};
+    public Quad() {
+        if(WHITE_TEXTURE == null) {
+            setDefaultTexture();
+        }
+        texture = WHITE_TEXTURE;
     }
 
-    public Quad(Vector3f pos, Vector2f size, Vector4f color) {
-        this.pos = new float[]{pos.x,pos.y, pos.z};
-        this.size = new float[]{size.x, size.y};
-        this.color = new float[]{color.x, color.y, color.z, color.w};
+    private void setDefaultTexture() {
+        WHITE_TEXTURE = Texture2D.create(1,1);
+        assert WHITE_TEXTURE != null;
+        int[] textureData = new int[]{ 0xffffffff };
+        WHITE_TEXTURE.setData(textureData);
     }
 
     public Vector3f getPosVector() {
@@ -43,6 +49,12 @@ public final class Quad {
         this.pos[0] = pos.x;
         this.pos[1] = pos.y;
         this.pos[2] = pos.z;
+    }
+
+    public void setPos(Vector2f pos) {
+        this.pos[0] = pos.x;
+        this.pos[1] = pos.y;
+        this.pos[2] = 0;
     }
 
     public void setSize(Vector2f size) {

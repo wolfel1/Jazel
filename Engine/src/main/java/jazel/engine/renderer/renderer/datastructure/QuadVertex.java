@@ -11,10 +11,9 @@ public final class QuadVertex {
     public Vector4f color;
     public Vector2f texCoord;
     public float texIndex;
-    public float tilingFactor;
 
     public static int getSize() {
-        return (3 + 4 + 2 + 1 + 1) * Float.SIZE / 8;
+        return (3 + 4 + 2 + 1) * Float.SIZE / 8;
     }
 
     public float[] toArray() {
@@ -26,7 +25,6 @@ public final class QuadVertex {
                 texCoord.x,
                 texCoord.y,
                 texIndex
-                // tilingFactor
         };
     }
 }

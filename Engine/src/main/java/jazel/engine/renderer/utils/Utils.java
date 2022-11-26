@@ -16,6 +16,6 @@ public final class Utils {
             resource = current.getResource(folder);
         }
         Core.assertion(resource == null, "Directory does not exist!");
-        return resource.getPath();
+        return resource.getPath().substring(1);
     }
 }
