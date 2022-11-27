@@ -4,7 +4,11 @@ import lombok.Getter;
 
 import java.util.LinkedList;
 
+/**
+ * Class which manages the layers
+ */
 public class LayerStack {
+
     @Getter
     private final LinkedList<Layer> layers = new LinkedList<>();
     private int layerInsertIndex = 0;
