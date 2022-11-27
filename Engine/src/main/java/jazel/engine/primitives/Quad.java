@@ -12,10 +12,11 @@ import org.joml.Vector4f;
 @NoArgsConstructor
 public final class Quad {
 
-    private float[] pos = new float[]{0, 0, 0};
-    private float[] size = new float[]{1, 1};
-    private float[] color = new float[]{1, 1, 1, 1.0f};
-    @Setter private Texture texture;
+    private float[] pos = new float[] { 0, 0, 0 };
+    private float[] size = new float[] { 1, 1 };
+    private float[] color = new float[] { 1, 1, 1, 1.0f };
+    @Setter
+    private Texture texture;
 
     public Vector3f getPosVector() {
         return new Vector3f(pos);
@@ -54,7 +55,7 @@ public final class Quad {
     }
 
     public void destroy() {
-        if(texture != null) {
+        if (texture != null) {
             texture.destroy();
         }
     }

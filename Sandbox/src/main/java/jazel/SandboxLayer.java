@@ -36,16 +36,16 @@ public class SandboxLayer extends Layer {
         cameraController.setAllowZoom(true);
 
         firstQuad = new Quad();
-        firstQuad.setPos(new Vector2f(-1,0));
-        firstQuad.setColor(new Vector4f(0.5f, 0.2f,0.8f, 1));
+        firstQuad.setPos(new Vector2f(-1, 0));
+        firstQuad.setColor(new Vector4f(0.5f, 0.2f, 0.8f, 1));
 
         texturedQuad = new Quad();
-        texturedQuad.setPos(new Vector2f(1,0));
+        texturedQuad.setPos(new Vector2f(1, 0));
         texturedQuad.setTexture(Texture.create("Checkerboard.png"));
 
         spritesheet = Texture.create("spritesheet.png");
         spritesheetQuad = new Quad();
-        front = SubTexture.create(spritesheet, new Vector2f(0,0), new Vector2f(256,320));
+        front = SubTexture.create(spritesheet, new Vector2f(0, 0), new Vector2f(256, 320));
     }
 
     @Override
@@ -65,8 +65,10 @@ public class SandboxLayer extends Layer {
 
         Renderer.beginScene(cameraController.getCamera());
         Renderer.draw(firstQuad.getPosVector(), firstQuad.getSizeVector(), firstQuad.getColorVector());
-        Renderer.draw(texturedQuad.getPosVector(), texturedQuad.getSizeVector(), texturedQuad.getColorVector(), texturedQuad.getTexture());
-        Renderer.draw(spritesheetQuad.getPosVector(), spritesheetQuad.getSizeVector(), spritesheetQuad.getColorVector(), front);
+        Renderer.draw(texturedQuad.getPosVector(), texturedQuad.getSizeVector(), texturedQuad.getColorVector(),
+                texturedQuad.getTexture());
+        Renderer.draw(spritesheetQuad.getPosVector(), spritesheetQuad.getSizeVector(), spritesheetQuad.getColorVector(),
+                front);
         Renderer.endScene();
     }
 

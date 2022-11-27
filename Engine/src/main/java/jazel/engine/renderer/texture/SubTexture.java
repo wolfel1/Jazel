@@ -19,10 +19,10 @@ public class SubTexture {
     }
 
     public static SubTexture create(Texture texture, Vector2f coordinates, Vector2f cellSize) {
-        Vector2f min = new Vector2f (coordinates.x / texture.getWidth(), coordinates.y / texture.getHeight() );
-        Vector2f max = new Vector2f ((coordinates.x +  cellSize.x) / texture.getWidth(), (coordinates.y + cellSize.y) / texture.getHeight() );
+        Vector2f min = new Vector2f(coordinates.x / texture.getWidth(), coordinates.y / texture.getHeight());
+        Vector2f max = new Vector2f((coordinates.x + cellSize.x) / texture.getWidth(),
+                (coordinates.y + cellSize.y) / texture.getHeight());
         return new SubTexture(texture, min, max);
     }
-
 
 }

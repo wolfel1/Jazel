@@ -36,6 +36,7 @@ public class OpenGLShader extends Shader {
     public OpenGLShader(String vertexPath, String fragmentPath) {
         super();
     }
+
     public OpenGLShader(List<String> shaderPaths) {
         super();
     }
@@ -43,9 +44,7 @@ public class OpenGLShader extends Shader {
     private Map<Integer, String> readFiles(String folder) throws IOException {
         String dir = Utils.getPath(folder);
         Set<String> paths = Stream.of(Objects.requireNonNull(new File(dir).listFiles()))
-                .filter(file -> !file.isDirectory())
-                .map(File::getName)
-                .collect(Collectors.toSet());
+                .filter(file -> !file.isDirectory()).map(File::getName).collect(Collectors.toSet());
 
         var shaderSources = new HashMap<Integer, String>();
         for (var path : paths) {
@@ -56,14 +55,12 @@ public class OpenGLShader extends Shader {
         return shaderSources;
     }
 
-
-
     private String readFile(String fileName) {
         var file = new File(fileName);
 
         var result = "";
         try {
-            result  = Files.readString(file.toPath());
+            result = Files.readString(file.toPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -101,12 +98,12 @@ public class OpenGLShader extends Shader {
         glLinkProgram(program);
 
         var isLinked = glGetProgrami(program, GL_LINK_STATUS);
-        if(isLinked == GL_FALSE) {
+        if (isLinked == GL_FALSE) {
             var infoLog = glGetProgramInfoLog(program);
 
             glDeleteProgram(program);
 
-            for(var id : shaderIDs) {
+            for (var id : shaderIDs) {
                 glDeleteShader(id);
             }
 
@@ -175,7 +172,7 @@ public class OpenGLShader extends Shader {
     @Override
     public void setMat4(String name, Matrix4f value) {
         var location = glGetUniformLocation(rendererID, name);
-        glUniformMatrix4fv(location, false, value.get(new float[4*4]));
+        glUniformMatrix4fv(location, false, value.get(new float[4 * 4]));
     }
 
     @Override

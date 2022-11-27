@@ -17,14 +17,7 @@ public final class QuadVertex {
     }
 
     public float[] toArray() {
-        return new float[] { position.x, position.y, position.z,
-                 color.x,
-                 color.y,
-                 color.z,
-                 color.w,
-                texCoord.x,
-                texCoord.y,
-                texIndex
-        };
+        return new float[] { position.x, position.y, position.z, color.x, color.y, color.z, color.w, texCoord.x,
+                texCoord.y, texIndex };
     }
 }

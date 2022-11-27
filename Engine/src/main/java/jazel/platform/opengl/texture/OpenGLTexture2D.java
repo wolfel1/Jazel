@@ -25,11 +25,10 @@ public class OpenGLTexture2D extends Texture {
     public OpenGLTexture2D(String textureFile) {
         super(textureFile);
 
-        var width= BufferUtils.createIntBuffer(1);
-        var height= BufferUtils.createIntBuffer(1);
+        var width = BufferUtils.createIntBuffer(1);
+        var height = BufferUtils.createIntBuffer(1);
         var channels = BufferUtils.createIntBuffer(1);
         stbi_set_flip_vertically_on_load(true);
-
 
         var data = stbi_load(path, width, height, channels, 0);
         Core.assertion(data == null, "Failed to load image! " + stbi_failure_reason());
@@ -37,14 +36,14 @@ public class OpenGLTexture2D extends Texture {
         this.height = height.get();
 
         switch (channels.get()) {
-            case 3 -> {
-                this.internalFormat = GL_RGB8;
-                this.dataFormat = GL_RGB;
-            }
-            case 4 -> {
-                this.internalFormat = GL_RGBA8;
-                this.dataFormat = GL_RGBA;
-            }
+        case 3 -> {
+            this.internalFormat = GL_RGB8;
+            this.dataFormat = GL_RGB;
+        }
+        case 4 -> {
+            this.internalFormat = GL_RGBA8;
+            this.dataFormat = GL_RGBA;
+        }
         }
         Core.assertion(this.internalFormat == 0 || this.dataFormat == 0, "Format not supported");
 

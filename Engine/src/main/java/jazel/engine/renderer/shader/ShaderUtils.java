@@ -31,5 +31,4 @@ public class ShaderUtils {
         return 0;
     }
 
-
 }

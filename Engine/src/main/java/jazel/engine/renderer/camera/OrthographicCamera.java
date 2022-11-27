@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.joml.Math;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+
 @Getter
 public class OrthographicCamera {
 
@@ -11,7 +12,7 @@ public class OrthographicCamera {
     private Matrix4f viewMatrix;
     private Matrix4f viewProjectionMatrix = new Matrix4f();
 
-    private Vector3f position = new Vector3f(0, 0,0);
+    private Vector3f position = new Vector3f(0, 0, 0);
     private float rotation = 0.0f;
 
     public OrthographicCamera(float left, float right, float bottom, float top) {
@@ -22,7 +23,7 @@ public class OrthographicCamera {
     }
 
     public void setProjection(float left, float right, float bottom, float top) {
-        projectionMatrix = projectionMatrix.setOrtho(left, right, bottom, top,  -1, 1);
+        projectionMatrix = projectionMatrix.setOrtho(left, right, bottom, top, -1, 1);
         projectionMatrix.mul(viewMatrix, viewProjectionMatrix);
     }
 
@@ -37,7 +38,7 @@ public class OrthographicCamera {
     }
 
     private void recalculateViewMatrix() {
-        var transform = new Matrix4f().translate(position).rotate(Math.toRadians(rotation), new Vector3f(0,0,1));
+        var transform = new Matrix4f().translate(position).rotate(Math.toRadians(rotation), new Vector3f(0, 0, 1));
 
         viewMatrix = transform.invert();
         projectionMatrix.mul(viewMatrix, viewProjectionMatrix);

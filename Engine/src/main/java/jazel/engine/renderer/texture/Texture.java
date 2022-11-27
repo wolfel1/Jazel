@@ -10,7 +10,8 @@ public abstract class Texture {
 
     @Getter
     protected int width;
-    @Getter protected int height;
+    @Getter
+    protected int height;
 
     protected int rendererID;
 
@@ -28,7 +29,6 @@ public abstract class Texture {
         this.path = Utils.getPath("assets/textures") + "/" + path;
     }
 
-
     public abstract void setData(int[] data);
 
     public abstract void bind(int slot);
@@ -44,7 +44,7 @@ public abstract class Texture {
         case OPENGL -> {
             return new OpenGLTexture2D(width, height);
         }
-    }
+        }
 
         Log.getCoreLogger().error("Unknown RendererAPI!");
         return null;
@@ -52,13 +52,13 @@ public abstract class Texture {
 
     public static Texture create(String textureFile) {
         switch (RendererAPI.getAPI()) {
-            case NONE -> {
-                Log.getCoreLogger().error("RendererAPI NONE is not supported!");
-                return null;
-            }
-            case OPENGL -> {
-                return new OpenGLTexture2D(textureFile);
-            }
+        case NONE -> {
+            Log.getCoreLogger().error("RendererAPI NONE is not supported!");
+            return null;
+        }
+        case OPENGL -> {
+            return new OpenGLTexture2D(textureFile);
+        }
         }
 
         Log.getCoreLogger().error("Unknown RendererAPI!");

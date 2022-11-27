@@ -16,16 +16,24 @@ import static java.lang.Math.max;
 
 public class OrthographicCameraController {
 
-    @Setter private boolean allowZoom = false;
-    @Setter private boolean allowRotation = false;
-    @Setter private boolean allowMove = false;
+    @Setter
+    private boolean allowZoom = false;
+    @Setter
+    private boolean allowRotation = false;
+    @Setter
+    private boolean allowMove = false;
 
     private float aspectRatio;
-    @Getter private float zoomLevel = 1.0f;
+    @Getter
+    private float zoomLevel = 1.0f;
 
-    @Setter @Getter private OrthographicCamera camera;
-    @Setter @Getter
+    @Setter
+    @Getter
+    private OrthographicCamera camera;
+    @Setter
+    @Getter
     private float cameraTranslationSpeed = 5.0f, cameraRotationSpeed = 180.0f;
+
     public OrthographicCameraController(float aspectRatio) {
         this.aspectRatio = aspectRatio;
         camera = new OrthographicCamera(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
@@ -35,7 +43,7 @@ public class OrthographicCameraController {
 
     public void onUpdate(float deltaTime) {
 
-        if(allowMove) {
+        if (allowMove) {
             var deltaPosition = new Vector3f();
             if (Input.isKeyPressed(KeyCode.A)) {
                 deltaPosition.x -= Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
@@ -68,7 +76,7 @@ public class OrthographicCameraController {
 
     @EventHandler(type = EventType.MOUSE_SCROLLED)
     public boolean onMouseScrolled(MouseScrolledEvent event) {
-        if(allowZoom) {
+        if (allowZoom) {
             zoomLevel -= event.getOffsetY() * 0.25f;
             zoomLevel = max(zoomLevel, 0.25f);
 

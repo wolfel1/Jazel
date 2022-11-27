@@ -22,6 +22,7 @@ public abstract class RendererAPI {
     public abstract void init();
 
     public abstract void setViewport(int x, int y, int width, int height);
+
     public abstract Vector4i getViewport();
 
     public abstract void setClearColor(Vector4f color);
@@ -29,6 +30,7 @@ public abstract class RendererAPI {
     public abstract void clear();
 
     public abstract void drawIndexed(VertexArray vertexArray, int vertexBuffer);
+
     public void renderImage(String name) {
         try {
             var viewport = getViewport();
@@ -44,8 +46,7 @@ public abstract class RendererAPI {
 
             for (int h = 0; h < height; h++) {
                 for (int w = 0; w < width; w++) {
-                    graphics.setColor(new Color((buffer.get() & 0xff), (buffer.get() & 0xff),
-                            (buffer.get() & 0xff)));
+                    graphics.setColor(new Color((buffer.get() & 0xff), (buffer.get() & 0xff), (buffer.get() & 0xff)));
                     buffer.get();
                     graphics.drawRect(w, height - h, 1, 1);
                 }
@@ -53,7 +54,7 @@ public abstract class RendererAPI {
             buffer.clear();
 
             var directory = Utils.getPath("output");
-            File outfile = new File(directory + "/" + name +".png");
+            File outfile = new File(directory + "/" + name + ".png");
             ImageIO.write(screenshot, "png", outfile);
         } catch (IOException ex) {
             Log.getCoreLogger().error(String.valueOf(ex));

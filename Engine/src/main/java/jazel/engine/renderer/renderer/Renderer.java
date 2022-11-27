@@ -68,16 +68,14 @@ public class Renderer {
         assert renderData.globalShader != null;
         renderData.globalShader.bind();
         renderData.globalShader.setIntArray("uTextures", samplers);
-        renderData.whiteTexture = Texture.create(1,1);
+        renderData.whiteTexture = Texture.create(1, 1);
         assert renderData.whiteTexture != null;
-        int[] textureData = new int[]{ 0xffffffff };
+        int[] textureData = new int[] { 0xffffffff };
         renderData.whiteTexture.setData(textureData);
 
         renderData.textureSlots = new Texture[RenderData.MAX_TEXTURE_SLOTS];
         renderData.textureSlots[0] = renderData.whiteTexture;
     }
-
-
 
     public static void beginScene(OrthographicCamera camera) {
         renderData.globalShader.bind();
@@ -96,7 +94,6 @@ public class Renderer {
         if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
             flushAndReset();
         }
-
 
         var transform = new Matrix4f().translate(position).scale(new Vector3f(size, 0));
 
@@ -132,13 +129,12 @@ public class Renderer {
             flushAndReset();
         }
 
-
-        var transform = new Matrix4f().translate(position)
-                .rotateZ(Math.toRadians(degrees))
+        var transform = new Matrix4f().translate(position).rotateZ(Math.toRadians(degrees))
                 .scale(new Vector3f(size, 0));
 
         draw(transform, color, QuadModelData.textureCoordinates, 0);
     }
+
     private static int searchTextureSlots(Texture texture) {
         int index = -1;
         for (int i = 1; i < renderData.textureSlotIndex; i++) {
@@ -209,6 +205,6 @@ public class Renderer {
     }
 
     public static void onWindowResize(int width, int height) {
-        RenderCommand.setViewport(0,0, width, height);
+        RenderCommand.setViewport(0, 0, width, height);
     }
 }
