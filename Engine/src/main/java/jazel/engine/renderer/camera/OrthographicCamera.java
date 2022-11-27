@@ -22,7 +22,7 @@ public class OrthographicCamera {
     }
 
     public void setProjection(float left, float right, float bottom, float top) {
-        projectionMatrix = projectionMatrix.setOrtho(left, right, top, bottom, -1, 1);
+        projectionMatrix = projectionMatrix.setOrtho(left, right, bottom, top,  -1, 1);
         projectionMatrix.mul(viewMatrix, viewProjectionMatrix);
     }
 
