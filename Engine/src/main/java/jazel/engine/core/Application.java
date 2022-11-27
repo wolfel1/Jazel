@@ -33,7 +33,7 @@ public class Application {
     private boolean minimized;
     private float lastFrameTime = 0.0f;
 
-    public Application() {
+    public Application(WindowProps props) {
         Core.checkEnvironment();
 
         Core.assertion(instance != null, "Application already exists");
@@ -41,7 +41,7 @@ public class Application {
         instance = this;
         layerStack = new LayerStack();
 
-        window = Window.create(new WindowProps("Jazel", 1920, 1080));
+        window = Window.create(props);
         running = true;
         minimized = false;
 

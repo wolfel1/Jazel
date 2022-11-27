@@ -34,7 +34,7 @@ public class SandboxLayer extends Layer {
         cameraController = new OrthographicCameraController(1920.0f / 1080.0f);
         cameraController.setAllowMove(true);
         cameraController.setAllowZoom(true);
-        
+
         firstQuad = new Quad();
         firstQuad.setPos(new Vector2f(-1,0));
         firstQuad.setColor(new Vector4f(0.5f, 0.2f,0.8f, 1));
