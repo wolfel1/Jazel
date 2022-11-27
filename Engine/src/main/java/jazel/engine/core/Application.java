@@ -76,6 +76,13 @@ public class Application {
             EventRegistry.handleEvents();
         }
 
+        shutdown();
+    }
+
+    private void shutdown() {
+        for (Layer layer : layerStack.getLayers()) {
+            layerStack.popLayer(layer);
+        }
         window.shutdown();
         Renderer.shutdown();
     }
