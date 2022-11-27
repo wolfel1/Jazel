@@ -53,12 +53,7 @@ public class ImGuiLayer extends Layer {
 
     @Override
     public void onUpdate(float deltaTime) {
-        if (ImGui.isAnyItemActive()) {
-            OrthographicCameraController.setAllowMove(false);
-        } else {
-            OrthographicCameraController.setAllowMove(true);
 
-        }
     }
 
     @Override

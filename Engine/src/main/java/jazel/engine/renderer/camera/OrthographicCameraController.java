@@ -16,24 +16,17 @@ import static java.lang.Math.max;
 
 public class OrthographicCameraController {
 
-    @Setter
-    private boolean zoomAllowed;
-    @Setter
-    private boolean rotationAllowed;
+    @Setter private boolean allowZoom = false;
+    @Setter private boolean allowRotation = false;
+    @Setter private boolean allowMove = false;
 
     private float aspectRatio;
     @Getter private float zoomLevel = 1.0f;
 
     @Setter @Getter private OrthographicCamera camera;
-
-    @Setter private static boolean allowMove = true;
-
     @Setter @Getter
     private float cameraTranslationSpeed = 5.0f, cameraRotationSpeed = 180.0f;
-    public OrthographicCameraController(float aspectRatio, boolean allowZoom, boolean allowRotation) {
-        zoomAllowed = allowZoom;
-        rotationAllowed = allowRotation;
-
+    public OrthographicCameraController(float aspectRatio) {
         this.aspectRatio = aspectRatio;
         camera = new OrthographicCamera(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
 
@@ -60,24 +53,22 @@ public class OrthographicCameraController {
                 deltaPosition.y -= Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
             }
             camera.addPosition(deltaPosition);
-
-
-            if (rotationAllowed) {
-                var rotation = 0.0f;
-                if (Input.isKeyPressed(KeyCode.Q)) {
-                    rotation -= cameraRotationSpeed * deltaTime;
-                } else if (Input.isKeyPressed(KeyCode.E)) {
-                    rotation += cameraRotationSpeed * deltaTime;
-                }
-                camera.addRotation(rotation);
+        }
+        if (allowRotation) {
+            var rotation = 0.0f;
+            if (Input.isKeyPressed(KeyCode.Q)) {
+                rotation -= cameraRotationSpeed * deltaTime;
+            } else if (Input.isKeyPressed(KeyCode.E)) {
+                rotation += cameraRotationSpeed * deltaTime;
             }
+            camera.addRotation(rotation);
         }
         cameraTranslationSpeed = zoomLevel;
     }
 
     @EventHandler(type = EventType.MOUSE_SCROLLED)
     public boolean onMouseScrolled(MouseScrolledEvent event) {
-        if(zoomAllowed) {
+        if(allowZoom) {
             zoomLevel -= event.getOffsetY() * 0.25f;
             zoomLevel = max(zoomLevel, 0.25f);
 
