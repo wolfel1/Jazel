@@ -18,60 +18,22 @@ public class OrthographicCameraController {
 
     @Setter
     private boolean allowZoom = false;
-    @Setter
-    private boolean allowRotation = false;
-    @Setter
-    private boolean allowMove = false;
-
     private float aspectRatio;
     @Getter
-    private float zoomLevel = 1.0f;
-
+    protected float zoomLevel = 1.0f;
     @Setter
     @Getter
-    private OrthographicCamera camera;
-    @Setter
-    @Getter
-    private float cameraTranslationSpeed = 5.0f, cameraRotationSpeed = 180.0f;
+    protected OrthographicCamera camera;
 
-    public OrthographicCameraController(float aspectRatio) {
-        this.aspectRatio = aspectRatio;
+
+    public OrthographicCameraController(float width, float height) {
+        this.aspectRatio = width / height;
         camera = new OrthographicCamera(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
 
         EventDispatcher.register(this);
     }
 
     public void onUpdate(float deltaTime) {
-
-        if (allowMove) {
-            var deltaPosition = new Vector3f();
-            if (Input.isKeyPressed(KeyCode.A)) {
-                deltaPosition.x -= Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-                deltaPosition.y -= Math.sin(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-            } else if (Input.isKeyPressed(KeyCode.D)) {
-                deltaPosition.x += Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-                deltaPosition.y += Math.sin(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-            }
-
-            if (Input.isKeyPressed(KeyCode.W)) {
-                deltaPosition.x += -Math.sin(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-                deltaPosition.y += Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-            } else if (Input.isKeyPressed(KeyCode.S)) {
-                deltaPosition.x -= -Math.sin(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-                deltaPosition.y -= Math.cos(Math.toRadians(camera.getRotation())) * cameraTranslationSpeed * deltaTime;
-            }
-            camera.addPosition(deltaPosition);
-        }
-        if (allowRotation) {
-            var rotation = 0.0f;
-            if (Input.isKeyPressed(KeyCode.Q)) {
-                rotation -= cameraRotationSpeed * deltaTime;
-            } else if (Input.isKeyPressed(KeyCode.E)) {
-                rotation += cameraRotationSpeed * deltaTime;
-            }
-            camera.addRotation(rotation);
-        }
-        cameraTranslationSpeed = zoomLevel;
     }
 
     @EventHandler(type = EventType.MOUSE_SCROLLED)

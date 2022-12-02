@@ -15,7 +15,7 @@ import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
 
-    private OrthographicCameraController cameraController;
+    private CameraController cameraController;
     private Quad firstQuad;
     private Quad texturedQuad;
 
@@ -31,7 +31,7 @@ public class SandboxLayer extends Layer {
 
     @Override
     public void onAttach() {
-        cameraController = new OrthographicCameraController(1920.0f / 1080.0f);
+        cameraController = new CameraController(1920.0f, 1080.0f);
         cameraController.setAllowMove(true);
         cameraController.setAllowZoom(true);
 
