@@ -3,9 +3,8 @@ package jazel;
 import imgui.ImGui;
 import imgui.type.ImString;
 import jazel.engine.core.layer.Layer;
-import jazel.engine.primitives.Quad;
+import jazel.engine.objects.primitives.Quad;
 import jazel.engine.events.Event;
-import jazel.engine.renderer.camera.OrthographicCameraController;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
 import jazel.engine.renderer.texture.SubTexture;
@@ -16,12 +15,8 @@ import org.joml.Vector4f;
 public class SandboxLayer extends Layer {
 
     private CameraController cameraController;
-    private Quad firstQuad;
-    private Quad texturedQuad;
-
-    private Texture spritesheet;
-    private Quad spritesheetQuad;
-    private SubTexture front;
+    private Box box;
+    private Character character;
 
     private final ImString outputName = new ImString();
 
@@ -35,25 +30,15 @@ public class SandboxLayer extends Layer {
         cameraController.setAllowMove(true);
         cameraController.setAllowZoom(true);
 
-        firstQuad = new Quad();
-        firstQuad.setPos(new Vector2f(-1, 0));
-        firstQuad.setColor(new Vector4f(0.5f, 0.2f, 0.8f, 1));
+        box = new Box();
 
-        texturedQuad = new Quad();
-        texturedQuad.setPos(new Vector2f(1, 0));
-        texturedQuad.setTexture(Texture.create("Checkerboard.png"));
-
-        spritesheet = Texture.create("spritesheet.png");
-        spritesheetQuad = new Quad();
-        front = SubTexture.create(spritesheet, new Vector2f(0, 0), new Vector2f(256, 320));
+        character = new Character();
     }
 
     @Override
     public void onDetach() {
-        firstQuad.destroy();
-        texturedQuad.destroy();
-        spritesheetQuad.destroy();
-        spritesheet.destroy();
+        box.destroy();
+        character.destroy();
     }
 
     @Override
@@ -64,11 +49,8 @@ public class SandboxLayer extends Layer {
         cameraController.onUpdate(deltaTime);
 
         Renderer.beginScene(cameraController.getCamera());
-        Renderer.draw(firstQuad.getPosVector(), firstQuad.getSizeVector(), firstQuad.getColorVector());
-        Renderer.draw(texturedQuad.getPosVector(), texturedQuad.getSizeVector(), texturedQuad.getColorVector(),
-                texturedQuad.getTexture());
-        Renderer.draw(spritesheetQuad.getPosVector(), spritesheetQuad.getSizeVector(), spritesheetQuad.getColorVector(),
-                front);
+        box.draw();
+        character.draw();
         Renderer.endScene();
     }
 

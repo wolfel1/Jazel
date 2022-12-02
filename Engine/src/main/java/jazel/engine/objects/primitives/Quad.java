@@ -1,4 +1,4 @@
-package jazel.engine.primitives;
+package jazel.engine.objects.primitives;
 
 import jazel.engine.renderer.texture.Texture;
 import lombok.Getter;
@@ -39,12 +39,26 @@ public final class Quad {
     public void setPos(Vector2f pos) {
         this.pos[0] = pos.x;
         this.pos[1] = pos.y;
-        this.pos[2] = 0;
+    }
+
+    public void move(Vector2f delta) {
+        pos[0] += delta.x;
+        pos[1] += delta.y;
     }
 
     public void setSize(Vector2f size) {
         this.size[0] = size.x;
         this.size[1] = size.y;
+    }
+
+    public void scale(float factor) {
+        size[0] *= factor;
+        size[1] *= factor;
+    }
+
+    public void scale(Vector2f factor) {
+        size[0] *= factor.x;
+        size[1] *= factor.y;
     }
 
     public void setColor(Vector4f color) {

@@ -20,6 +20,7 @@ public class OrthographicCameraController {
     private boolean allowZoom = false;
     private float aspectRatio;
     @Getter
+    @Setter
     protected float zoomLevel = 1.0f;
     @Setter
     @Getter
