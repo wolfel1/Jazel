@@ -3,13 +3,9 @@ package jazel;
 import imgui.ImGui;
 import imgui.type.ImString;
 import jazel.engine.core.layer.Layer;
-import jazel.engine.objects.primitives.Quad;
 import jazel.engine.events.Event;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
-import jazel.engine.renderer.texture.SubTexture;
-import jazel.engine.renderer.texture.Texture;
-import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {
@@ -27,18 +23,15 @@ public class SandboxLayer extends Layer {
     @Override
     public void onAttach() {
         cameraController = new CameraController(1920.0f, 1080.0f);
-        cameraController.setAllowMove(true);
         cameraController.setAllowZoom(true);
 
         box = new Box();
 
-        character = new Character();
     }
 
     @Override
     public void onDetach() {
-        box.destroy();
-        character.destroy();
+        box.destroy();;
     }
 
     @Override
@@ -46,11 +39,11 @@ public class SandboxLayer extends Layer {
         RenderCommand.setClearColor(new Vector4f(0.2f, 0.2f, 0.2f, 1.0f));
         RenderCommand.clear();
 
-        cameraController.onUpdate(deltaTime);
+        box.act(deltaTime);
+        cameraController.update(deltaTime);
 
         Renderer.beginScene(cameraController.getCamera());
         box.draw();
-        character.draw();
         Renderer.endScene();
     }
 

@@ -1,7 +1,5 @@
 package jazel.engine.renderer.camera;
 
-import jazel.engine.core.Input;
-import jazel.engine.core.encoding.KeyCode;
 import jazel.engine.events.EventDispatcher;
 import jazel.engine.events.annotation.EventHandler;
 import jazel.engine.events.application.WindowResizeEvent;
@@ -9,8 +7,6 @@ import jazel.engine.events.enumeration.EventType;
 import jazel.engine.events.mouse.MouseScrolledEvent;
 import lombok.Getter;
 import lombok.Setter;
-import org.joml.Math;
-import org.joml.Vector3f;
 
 import static java.lang.Math.max;
 
@@ -34,7 +30,7 @@ public class OrthographicCameraController {
         EventDispatcher.register(this);
     }
 
-    public void onUpdate(float deltaTime) {
+    public void update(float deltaTime) {
     }
 
     @EventHandler(type = EventType.MOUSE_SCROLLED)

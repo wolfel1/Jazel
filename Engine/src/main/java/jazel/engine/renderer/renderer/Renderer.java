@@ -1,8 +1,5 @@
 package jazel.engine.renderer.renderer;
 
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-
 import jazel.engine.renderer.camera.OrthographicCamera;
 import jazel.engine.renderer.container.*;
 import jazel.engine.renderer.renderer.datastructure.QuadModelData;
@@ -13,10 +10,10 @@ import jazel.engine.renderer.shader.enumeration.ShaderDataType;
 import jazel.engine.renderer.texture.SubTexture;
 import jazel.engine.renderer.texture.Texture;
 import org.joml.Math;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.*;
+
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 import static jazel.engine.renderer.utils.VectorUtils.convertVec4ToVec3;
 
@@ -70,7 +67,7 @@ public class Renderer {
         renderData.globalShader.setIntArray("uTextures", samplers);
         renderData.whiteTexture = Texture.create(1, 1);
         assert renderData.whiteTexture != null;
-        int[] textureData = new int[] { 0xffffffff };
+        int[] textureData = new int[]{0xffffffff};
         renderData.whiteTexture.setData(textureData);
 
         renderData.textureSlots = new Texture[RenderData.MAX_TEXTURE_SLOTS];
@@ -133,6 +130,28 @@ public class Renderer {
                 .scale(new Vector3f(size, 0));
 
         draw(transform, color, QuadModelData.textureCoordinates, 0);
+    }
+
+    public static void drawRotated(Vector3f position, Vector2f size, Vector4f color, float degrees, Texture texture) {
+        if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
+            flushAndReset();
+        }
+        int textureIndex = searchTextureSlots(texture);
+        var transform = new Matrix4f().translate(position).rotateZ(Math.toRadians(degrees))
+                .scale(new Vector3f(size, 0));
+
+        draw(transform, color, QuadModelData.textureCoordinates, textureIndex);
+    }
+
+    public static void drawRotated(Vector3f position, Vector2f size, Vector4f color, float degrees, SubTexture subTexture) {
+        if (renderData.quadIndexCount >= RenderData.MAX_INDICES) {
+            flushAndReset();
+        }
+        int textureIndex = searchTextureSlots(subTexture.getTexture());
+        var transform = new Matrix4f().translate(position).rotateZ(Math.toRadians(degrees))
+                .scale(new Vector3f(size, 0));
+
+        draw(transform, color, QuadModelData.textureCoordinates, textureIndex);
     }
 
     private static int searchTextureSlots(Texture texture) {

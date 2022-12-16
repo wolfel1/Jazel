@@ -1,12 +1,11 @@
 package jazel;
 
-import jazel.engine.objects.Sprite;
-import jazel.engine.objects.primitives.Quad;
+import jazel.engine.objects.Actor;
 import jazel.engine.renderer.texture.SubTexture;
 import jazel.engine.renderer.texture.Texture;
 import org.joml.Vector2f;
 
-public class Character extends Sprite {
+public class Character extends Actor {
 
     private Texture spritesheet;
     private SubTexture front;
@@ -17,7 +16,7 @@ public class Character extends Sprite {
     }
 
     @Override
-    public void act() {
+    public void act(float deltaTime) {
 
     }
 

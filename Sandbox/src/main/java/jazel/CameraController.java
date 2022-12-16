@@ -22,7 +22,7 @@ public class CameraController extends OrthographicCameraController {
         super(width, height);
     }
 
-    public void onUpdate(float deltaTime) {
+    public void update(float deltaTime) {
 
         if (allowMove) {
             var deltaPosition = new Vector3f();

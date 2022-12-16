@@ -15,6 +15,8 @@ public final class Quad {
     private float[] pos = new float[] { 0, 0, 0 };
     private float[] size = new float[] { 1, 1 };
     private float[] color = new float[] { 1, 1, 1, 1.0f };
+
+    @Setter private float rotation;
     @Setter
     private Texture texture;
 
@@ -45,6 +47,18 @@ public final class Quad {
         pos[0] += delta.x;
         pos[1] += delta.y;
     }
+    public void moveUp(float amount) {
+        pos[1] += amount;
+    }
+    public void moveDown(float amount) {
+        pos[1] -= amount;
+    }
+    public void moveRight(float amount) {
+        pos[0] += amount;
+    }
+    public void moveLeft(float amount) {
+        pos[0] -= amount;
+    }
 
     public void setSize(Vector2f size) {
         this.size[0] = size.x;
@@ -66,6 +80,14 @@ public final class Quad {
         this.color[1] = color.y;
         this.color[2] = color.z;
         this.color[3] = color.w;
+    }
+
+    public void rotateRight(float degrees) {
+        rotation -= degrees;
+    }
+
+    public void rotateLeft(float degrees) {
+        rotation += degrees;
     }
 
     public void destroy() {
