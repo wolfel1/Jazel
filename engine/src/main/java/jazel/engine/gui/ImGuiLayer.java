@@ -10,7 +10,6 @@ import jazel.engine.core.Application;
 import jazel.engine.core.layer.Layer;
 import jazel.engine.events.Event;
 import jazel.engine.events.enumeration.EventCategory;
-import jazel.engine.renderer.camera.OrthographicCameraController;
 import org.lwjgl.glfw.GLFW;
 
 public class ImGuiLayer extends Layer {

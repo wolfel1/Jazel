@@ -7,7 +7,7 @@ public class Core {
     private static boolean isDebug = false;
 
     public static void checkEnvironment() {
-        isDebug = true; // TODO: maven profiles to toggle this
+        isDebug = true; // TODO: build setting to toggle this
 
         if (!SystemUtils.IS_OS_WINDOWS) {
             Log.getCoreLogger().error("Currently is only Windows supported!");
