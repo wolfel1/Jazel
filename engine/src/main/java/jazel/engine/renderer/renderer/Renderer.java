@@ -61,7 +61,7 @@ public class Renderer {
             samplers[i] = i;
         }
 
-        renderData.globalShader = Shader.create("Global");
+        renderData.globalShader = Shader.createBuiltIn("global");
         assert renderData.globalShader != null;
         renderData.globalShader.bind();
         renderData.globalShader.setIntArray("uTextures", samplers);

@@ -9,10 +9,14 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,41 +24,67 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class OpenGLShader extends Shader {
 
-    public OpenGLShader(String name) {
+    public OpenGLShader(String name, String directory) {
         super(name);
 
-        String path = rootPath + name;
         Map<Integer, String> shaderSources = null;
         try {
-            shaderSources = readFiles(path);
+            shaderSources = readFiles(directory);
         } catch (IOException e) {
             Core.assertion(true, "Could not read files");
         }
         compile(shaderSources);
     }
-
-    public OpenGLShader(String vertexPath, String fragmentPath) {
-        super();
-    }
-
-    public OpenGLShader(List<String> shaderPaths) {
-        super();
-    }
-
     private Map<Integer, String> readFiles(String folder) throws IOException {
-        String dir = Utils.getPath(folder);
-        Set<String> paths = Stream.of(Objects.requireNonNull(new File(dir).listFiles()))
-                .filter(file -> !file.isDirectory()).map(File::getName).collect(Collectors.toSet());
-
+        var classLoader = Thread.currentThread().getContextClassLoader();
+        var resource = classLoader.getResource(folder);
         var shaderSources = new HashMap<Integer, String>();
-        for (var path : paths) {
-            var type = path.split("\\.", -1)[1];
-            var source = readFile(dir + "/" + path);
-            shaderSources.put(OpenGLShaderUtils.getShaderTypeFromString(type), source);
+        if (resource == null) {
+            String dir = Utils.getPath(folder);
+            var paths = Stream.of(Objects.requireNonNull(new File(dir).listFiles()))
+                    .filter(file -> !file.isDirectory()).map(File::getName).collect(Collectors.toSet());
+
+            for (var path : paths) {
+                var type = path.split("\\.", -1)[1];
+                var source = readFile(dir + "/" + path);
+                shaderSources.put(OpenGLShaderUtils.getShaderTypeFromString(type), source);
+            }
+        } else if (resource.getProtocol().equals("jar")) {
+            /* A JAR path */
+            String jarPath = resource.getPath().substring(5, resource.getPath().indexOf("!")); //strip out only the JAR file
+            JarFile jar = new JarFile(URLDecoder.decode(jarPath, StandardCharsets.UTF_8));
+            Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
+            Set<String> paths = new HashSet<>(); //avoid duplicates in case it is a subdirectory
+            while(entries.hasMoreElements()) {
+                String name = entries.nextElement().getName();
+                if (name.startsWith(folder)) { //filter according to the path
+                    String entry = name.substring(folder.length());
+                    if (entry.length() > 1) {
+                        paths.add(entry);
+                    }
+                }
+            }
+            for (var path : paths) {
+                var type = path.split("\\.", -1)[1];
+                var source = readJarFile(folder + path);
+                shaderSources.put(OpenGLShaderUtils.getShaderTypeFromString(type), source);
+            }
         }
         return shaderSources;
     }
 
+    private String readJarFile(String fileName) throws IOException {
+        var classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classLoader.getResourceAsStream(fileName);
+
+        StringBuilder result = new StringBuilder();
+        InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(streamReader);
+        for (String line; (line = reader.readLine()) != null;) {
+            result.append(line).append("\n");
+        }
+        return result.toString();
+    }
     private String readFile(String fileName) {
         var file = new File(fileName);
 

@@ -6,6 +6,7 @@ import jazel.engine.core.layer.Layer;
 import jazel.engine.events.Event;
 import jazel.engine.renderer.renderer.RenderCommand;
 import jazel.engine.renderer.renderer.Renderer;
+import jazel.engine.renderer.shader.Shader;
 import org.joml.Vector4f;
 
 public class SandboxLayer extends Layer {

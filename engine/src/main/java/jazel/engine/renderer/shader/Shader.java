@@ -11,12 +11,17 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.List;
 
 @NoArgsConstructor
 public abstract class Shader {
 
     protected static final String rootPath = "assets/shaders/";
+    protected static final String builtInShaderPath = "builtin/shader/";
 
     protected int rendererID;
     @Getter
@@ -47,14 +52,31 @@ public abstract class Shader {
     public abstract void destroy();
 
     public static Shader create(String name) {
+        String path = rootPath + name;
         switch (RendererAPI.getAPI()) {
         case NONE -> {
             Log.getCoreLogger().error("RendererAPI NONE is not supported!");
             return null;
         }
         case OPENGL -> {
-            return new OpenGLShader(name);
+            return new OpenGLShader(name, path);
         }
+        }
+
+        Log.getCoreLogger().error("Unknown RendererAPI!");
+        return null;
+    }
+
+    public static Shader createBuiltIn(String name) {
+        var path = builtInShaderPath + name;
+        switch (RendererAPI.getAPI()) {
+            case NONE -> {
+                Log.getCoreLogger().error("RendererAPI NONE is not supported!");
+                return null;
+            }
+            case OPENGL -> {
+                return new OpenGLShader(name, path);
+            }
         }
 
         Log.getCoreLogger().error("Unknown RendererAPI!");
@@ -70,22 +92,6 @@ public abstract class Shader {
         }
         case OPENGL -> {
             return new OpenGLShader(vertexPath, fragmentPath);
-        }
-        }
-
-        Log.getCoreLogger().error("Unknown RendererAPI!");
-        return null;
-    }
-
-    public static Shader createFromFiles(List<String> shaderPaths) {
-
-        switch (RendererAPI.getAPI()) {
-        case NONE -> {
-            Log.getCoreLogger().error("RendererAPI NONE is not supported!");
-            return null;
-        }
-        case OPENGL -> {
-            return new OpenGLShader(shaderPaths);
         }
         }
 
