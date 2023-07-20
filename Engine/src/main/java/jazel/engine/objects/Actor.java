@@ -47,7 +47,7 @@ public abstract class Actor {
 
     private boolean isRotated() {
         var rotation = quad.getRotation();
-        return rotation != 0 || rotation != 360;
+        return rotation != 0.0 && rotation != 360.0;
     }
 
     public void destroy() {

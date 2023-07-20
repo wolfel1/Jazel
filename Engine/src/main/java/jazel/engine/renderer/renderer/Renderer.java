@@ -151,7 +151,7 @@ public class Renderer {
         var transform = new Matrix4f().translate(position).rotateZ(Math.toRadians(degrees))
                 .scale(new Vector3f(size, 0));
 
-        draw(transform, color, QuadModelData.textureCoordinates, textureIndex);
+        draw(transform, color, subTexture.getCoordinates(), textureIndex);
     }
 
     private static int searchTextureSlots(Texture texture) {

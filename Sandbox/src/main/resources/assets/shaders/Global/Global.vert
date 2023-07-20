@@ -15,6 +15,6 @@ void main()
 {
     vTexIndex = aTexIndex;
     vColor = aColor;
-   vTexCoord = aTexCoord;
+    vTexCoord = aTexCoord;
     gl_Position = uViewProjection * vec4(aPosition, 1.0);
 }
