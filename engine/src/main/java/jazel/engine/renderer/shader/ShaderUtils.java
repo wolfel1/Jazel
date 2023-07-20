@@ -3,6 +3,18 @@ package jazel.engine.renderer.shader;
 import jazel.engine.core.Core;
 import jazel.engine.core.Log;
 import jazel.engine.renderer.shader.enumeration.ShaderDataType;
+import jazel.engine.renderer.utils.Utils;
+import jazel.platform.opengl.shader.OpenGLShaderUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ShaderUtils {
     public static int shaderDataTypeSize(ShaderDataType type) {
@@ -31,4 +43,29 @@ public class ShaderUtils {
         return 0;
     }
 
+    public Map<Integer, String> readFiles(String folder) throws IOException {
+        String dir = Utils.getPath(folder);
+        Set<String> paths = Stream.of(Objects.requireNonNull(new File(dir).listFiles()))
+                .filter(file -> !file.isDirectory()).map(File::getName).collect(Collectors.toSet());
+
+        var shaderSources = new HashMap<Integer, String>();
+        for (var path : paths) {
+            var type = path.split("\\.", -1)[1];
+            var source = readFile(dir + "/" + path);
+            shaderSources.put(OpenGLShaderUtils.getShaderTypeFromString(type), source);
+        }
+        return shaderSources;
+    }
+
+    private String readFile(String fileName) {
+        var file = new File(fileName);
+
+        var result = "";
+        try {
+            result = Files.readString(file.toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 }

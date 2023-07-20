@@ -27,22 +27,18 @@ public class ShaderLibrary {
 
     public Shader load(String name) {
         var shader = Shader.create(name);
+        assert shader != null;
         add(shader);
         return shader;
     }
 
     public Shader load(String vertexPath, String fragmentPath) {
         var shader = Shader.createFromFile(vertexPath, fragmentPath);
+        assert shader != null;
         add(shader);
         return shader;
     }
 
-    public Shader load(List<String> shaderPaths) {
-        var shader = Shader.createFromFiles(shaderPaths);
-        add(shader);
-        return shader;
-
-    }
 
     public boolean exists(String name) {
         return shaderMap.containsKey(name);
