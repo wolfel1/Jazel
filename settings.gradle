@@ -5,5 +5,4 @@
 rootProject.name = 'Jazel'
 include(':sandbox')
 include(':engine')
-include 'pong'
 

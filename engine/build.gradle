@@ -4,7 +4,7 @@
 
 plugins {
     id 'jazel.java-conventions'
-    id 'java-library'
+    id 'maven-publish'
 }
 
 project.ext.lwjglVersion = "3.3.1"
